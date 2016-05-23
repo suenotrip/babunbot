@@ -305,6 +305,7 @@ function listProductivityTools(data){
     var regex = /list_productivity_tools/i;
     var contexts = findContextsThatMatches(data.result.contexts,regex);
     var context = contexts.pop();
+	console.log("===context lifespan", context.lifespan);
     var page = MAX_PAGE_NO - context.lifespan;
 
     return db.getMessagesOfType("productivity_tools").then(function(messages){
