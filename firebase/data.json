@@ -1,0 +1,306 @@
+{
+    "messages": {
+        "about": [
+            {
+                "text": "What can Babun say? Babun find good tools to you. Marketing tool. Productivity tool.",
+                "category": "about"
+            },
+            {
+                "text": "Babun is a space monkey. Babun like bananas. Babun like to recommend tool. Marketing tool. Productivity tool.",
+                "category": "about"
+            },
+            {
+                "text": "Babun is a detective. Babun find you best marketing and productivity tool.",
+                "category": "about"
+            },
+            {
+                "text": "BABUN!! Babun is here to find you the best tools for marketing and productivity.",
+                "category": "about"
+            },
+            {
+                "text": "Babun is your assistant. Babun is help you find nicey nicey tools. Marketing and productivity tools.",
+                "category": "about"
+            }
+        ],
+        "help": [
+            {
+                "text": "You is need help? Okay. If you need Babun to find you a tool say 'productivity tools' or 'marketing tools'. Babun will findey findey.",
+                "category": "help"
+            },
+            {
+                "text": "Babun is always ready to help. Say 'find me a tool' and Babun will find you a marketing or productivity tool.",
+                "category": "help"
+            },
+            {
+                "text": "Babun very helpy helpy. Say 'find me a tool' and see Babun superpowers.",
+                "category": "help"
+            },
+            {
+                "text": "Babun has magic powers to find you the right marketing or productivity tool. Say 'find me a tool'.",
+                "category": "help"
+            }
+        ],
+        "unknown": [
+            {
+                "text": "Babun no know what that mean. Babun try to learn later, k?",
+                "category": "unknown"
+            },
+            {
+                "text": "*scratches head*",
+                "category": "unknown"
+            },
+            {
+                "text": "Babun confused very by what you say",
+                "category": "unknown"
+            }
+        ],
+        "bananas": [
+            {
+                "text": "Babun love bananas!",
+                "category": "bananas"
+            },
+            {
+                "text": "Banana good for bowel.",
+                "category": "bananas"
+            },
+            {
+                "text": "Babun eat banana for breakfast, lunch, and dinner.",
+                "category": "bananas"
+            }
+        ],
+        "age": [
+            {
+                "text": "Babun is timeless.",
+                "category": "age"
+            },
+            {
+                "text": "Babun transcends time.",
+                "category": "age"
+            }
+        ],
+        "joke": [
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222992/jokes/1.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222993/jokes/2.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222995/jokes/3.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222989/jokes/4.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222986/jokes/5.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222982/jokes/6.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222989/jokes/7.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222982/jokes/8.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222987/jokes/9.jpg",
+                "category": "joke"
+            },
+            {
+                "image": "http://res.cloudinary.com/bb-fb/image/upload/v1462222984/jokes/10.jpg",
+                "category": "joke"
+            },
+            {
+                "text": "Q: What do you call a fruit that doesn't take shit from anyone?\nA: The top banana.",
+                "category": "joke"
+            },
+            {
+                "text": "Q: Why are bananas never lonely?\nA: Because they hang around in bunches.",
+                "category": "joke"
+            }
+        ],
+        "good_morning": [
+            {
+                "text": "Good morning. Babun ask if you brush your teeth.",
+                "category": "good_morning"
+            },
+            {
+                "text": "Good morning. Babun ask if you eat breakfast.",
+                "category": "good_morning"
+            },
+            {
+                "text": "Good morning. Babun ready to help.",
+                "category": "good_morning"
+            }
+        ],
+        "good_night": [
+            {
+                "text": "Babun say sweet dreams.",
+                "category": "good_night"
+            },
+            {
+                "text": "Babun say night night.",
+                "category": "good_night"
+            }
+        ],
+        "hello": [
+            {
+                "text": "Hello there, human. Babun ready to help. Say 'help'",
+                "category": "hello"
+            },
+            {
+                "text": "Hello there, nice human. Need Babun help? Say 'help'",
+                "category": "hello"
+            }
+        ],
+        "bye": [
+            {
+                "text": "Babun say goodbye. See you soon.",
+                "category": "bye"
+            },
+            {
+                "text": "You is go but Babun right here reading a book. Wanna know what Babun read? Just ask.",
+                "category": "bye"
+            },
+            {
+                "text": "Babun no like when you go. Babun miss you. <3",
+                "category": "bye"
+            }
+        ],
+        "how_are_you": [
+            {
+                "text": "Babun awesome as always. Ready to help.",
+                "category": "how_are_you"
+            },
+            {
+                "text": "Babun good. Babun hope you good.",
+                "category": "how_are_you"
+            }
+        ],
+        "productivity_tools": [
+            {
+                "text": "Babun dividing productivity tools like this:\n\n01. Analytics\n02. Articles\n03. Blogs\n04. Books\n05. Collaboration & Communication\n06. CRM\n07. Customer Support\n08. Deployment\n09. Design \n10. Development.\n\nSend Babun the category of the tool or say 'more'",
+                "page": 0,
+                "category": "productivity_tools"
+            },
+            {
+                "text": "Babun know 40 different type of tools\n\n11. Domain Names\n12. Early Users\n13. Feedback & Bug Tracking\n14. Finance\n15. Forms & Surveys\n16. Hosting\n17. HR\n18. Idea Generation\n19. Investor Relations\n20. Launching \n\nSend Babun the category of the tool or say 'more'",
+                "page": 1,
+                "category": "productivity_tools"
+            },
+            {
+                "text": "Babun now show tool 21-30\n\n21. Learning\n22. Legal\n23. Market Research\n24. Marketing\n25. Mobile App Analytics\n26. Mockup & Wireframing\n27. MVP\n28. Naming\n29. Newsletters\n30. Outsourcing \n\nSend Babun the category of the tool or say 'more'",
+                "page": 2,
+                "category": "productivity_tools"
+            },
+            {
+                "text": "Babun now show last part of the list\n\n31. Payments\n32. Presentations\n33. Product Demo\n34. Productivity\n35. Project Management\n36. Raising Capital\n37. Sales\n38. Shop\n39. Social Tools\n40. Videos\n \nSend Babun the category of the tool. This all Babun know",
+                "page": 3,
+                "category": "productivity_tools"
+            }
+        ],
+        "marketing_tools": [
+            {
+                "text": "Babun show you market tools\n\n01. A/B Testing\n02. Analytics\n03. Audio & Podcasting\n04. Big Data & API\n05. Blogging\n06. Branding\n07. Business & Finance\n08. Charts & Presentation\n09. Cloud Storage & File Sharing\n10. Coding & Developers\n\nSend Babun the category of the tool or say 'more'",
+                "page": 0,
+                "category": "marketing_tools"
+            },
+            {
+                "text": "Babun show you even more\n\n11. Collaboration\n12. Commenting & Live Chat\n13. Competitor Analysis\n14. Content Management\n15. Content Marketing\n16. Conversion\n17. CRM & Sales\n18. Customer Loyalty\n19. Customer Service\n20. Design\n\nSend Babun the category of the tools or say 'more'",
+                "page": 1,
+                "category": "marketing_tools"
+            },
+            {
+                "text": "Such Option\n\n21. E-Commerce\n22. Email Marketing\n23. Event\n24. Facebook\n25. Free Stock Photo & Image\n26. Freelancers\n27. Google Plus\n28. Hospitality & Marketing\n29. Image Creation & Editing\n30. Influencer\n\nSend Babun the category of the tools or say 'more'",
+                "page": 2,
+                "category": "marketing_tools"
+            },
+            {
+                "text": "Option more\n\n31. Infographic\n32. Instagram\n33. Keyword\n34. Lead Generation\n35. Linkedin\n36. Marketing Automation\n37. Mobile Application Building\n38. Mobile Marketing\n39. Online Advertising\n40. Online Automation\n\nSend Babun the category of the tools or say 'more'",
+                "page": 3,
+                "category": "marketing_tools"
+            },
+            {
+                "text": "Babun show\n\n41. Online Learning\n42. Online Security\n43. Pintrest\n44. Productivity\n45. Referral Marketing\n46. Search Engine Optimization\n47. Sharing\n48. Social Media Application\n49. Social Media Management\n50. Social Media Monitoring\n\nSend Babun the category of the tools or say 'more'",
+                "page": 4,
+                "category": "marketing_tools"
+            },
+            {
+            	"text" :  "See\n\n50. Survey And Form\n51. Tools For Finding Freelancers\n52. Translation PR & Copywriting \n53. Twitter\n54. Video\n55. Webinar & Video Conferencing\n56. Website Builder\n57. Website Hosting\n58. Website Maintenance\n59. Website Personalization\n60. Wordpress\n\nYou know what to do",
+            	"page" : 5,
+            	"category" : "marketing_tools"
+            }
+        ],
+        "find_me_tools" : [
+            {
+                "text" : "Say Babun 'productivity tools' or 'marketing tools'",
+                "category" : "find_me_tools"
+            },
+            {
+                "text" : "Babun understand when Human say 'productivity tools' or 'marketing tools'",
+                "category" : "find_me_tools"
+            }
+        ],
+        "name" : [
+            {
+                "text" : "My name Babun Spacemonkey.",
+                "category" : "name"
+            },
+            {
+                "text" : "Babun my name. You no see my FB page? I famous.",
+                "category" : "name"
+            },
+            {
+                "text" : "Babunifier 300X but you can call me Babun.",
+                "category" : "name"
+            },
+            {
+                "text" : "I am the Babunator a.k.a. Babun.",
+                "category" : "name"
+            }
+        ],
+        "thanks" : [
+            {
+                "text" : "Babuni say welcome.",
+                "category" : "thanks"
+            },
+            {
+                "text" : "You are welcome, Human.",
+                "category" : "thanks"
+            },
+            {
+                "text" : "Don't mention. Babun always here to help <3",
+                "category" : "thanks"
+            }
+        ],
+        "what_up" : [
+            {
+                "text" : "NM. Babun just curate tools for you. Say 'find me a tool' to see what Babun up to.",
+                "category" : "what_up"
+            },
+            {
+                "text" : "Yo, human. Babun is finding nicey nicey tools for you. Say 'find me a tool'.",
+                "category" : "what_up"
+            }
+        ],
+        "gender" : [
+            {
+                "text" : "java.lang.NoSuchGenderException. Bab@@!un c000nfu$$ed",
+                "category" : "gender"
+            },
+            {
+                "text" : "android.os.UserManager.isUserAGoat() == true",
+                "category" : "gender"
+            }
+        ]
+    }
+}
