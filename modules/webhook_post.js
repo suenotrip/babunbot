@@ -6,6 +6,8 @@ var Adapter = require("./Adapter");
 var db = new Adapter();
 var nlp = require("./nlp");
 var _ = require("underscore");
+var http = require('http');
+
 //------------------------------------------------------------------------------
 module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
@@ -62,10 +64,13 @@ module.exports = function(req,res,next){
 //------------------------------------------------------------------------------
 function afterNlp(data){
     var action = data.result.action;
-    console.log(data);
+    console.log("===amit-data",data);
     console.log("===action",action);
     if( data.result.source == "agent" ){
         switch( action ){
+			case "agent.exitto.letsclap":
+                //PostCode(sender_id,msg_id);
+                break;
             case "agent.about":
                 about(data);
                 break;
@@ -148,6 +153,37 @@ function afterNlp(data){
     }
 }
 //------------------------------------------------------------------------------
+
+//post to letsclap
+function PostCode(sender_id,msg_id) {
+  // Build the post string from an object
+  var post_data = {'action':'takeover','user_id' : sender_id,'msg_id' : msg_id};
+
+  // An object of options to indicate where to post to
+  var post_options = {
+      host: 'app.letsclap.io',
+      port: '80',
+      path: '/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
+      method: 'POST',
+      json:true
+  };
+
+  // Set up the request
+  var post_req = http.request(post_options, function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+          console.log('Response: ' + chunk);
+      });
+  });
+
+  // post the data
+  post_req.write(post_data);
+  post_req.end();
+
+}
+
+
+
 function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
