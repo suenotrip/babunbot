@@ -160,7 +160,7 @@ function afterNlp(data){
 //post to letsclap
 function PostCode(sender_id,msg_id) {
   // Build the post string from an object
-  var post_data = {'action':'takeover','user_id' : sender_id,'msg_id' : msg_id};
+  var post_data = {"action":"takeover","user_id" : sender_id,"msg_id" : msg_id};
 
   // An object of options to indicate where to post to
   var post_options = {

@@ -34,6 +34,7 @@ function nlp(query,sessionId){
 			}
 		}
 	});
+	console.log("==deferred.promise",deferred.promise)
 	return deferred.promise;
 }
 
