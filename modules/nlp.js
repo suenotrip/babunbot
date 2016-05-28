@@ -27,6 +27,7 @@ function nlp(query,sessionId,msg_id){
 			deferred.reject(err);
 		}else{
 			body.sessionId = sessionId;
+			body.msg_id=msg_id;
 			if(response.statusCode == 200){
 				console.log("===nlp succeeded ");
 				deferred.resolve(body);
