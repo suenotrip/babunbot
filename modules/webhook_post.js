@@ -43,7 +43,7 @@ module.exports = function(req,res,next){
                }else{
                    // NLP!
                    console.log("===user sent text");
-                   promises.push( nlp(text,senderId,msg_id) );
+                   promises.push( nlp(text,senderId) );
                }
            }else if(isPostback){
                console.log("===user sent postback");
@@ -56,7 +56,7 @@ module.exports = function(req,res,next){
     });
     Q.all(promises).then(function(results){
         results.forEach(function(result){
-           afterNlp(result);
+           afterNlp(result,msg_id);
         });
     },function(error){
         console.log("[webhook_post.js]",error);
@@ -64,9 +64,10 @@ module.exports = function(req,res,next){
     return next();
 }
 //------------------------------------------------------------------------------
-function afterNlp(data){
+function afterNlp(data,msg_id){
     var action = data.result.action;
     console.log("===amit-data",data);
+	console.log("===amit-msg",msg_id);
     console.log("===action",action);
     if( data.result.source == "agent" ){
         switch( action ){
