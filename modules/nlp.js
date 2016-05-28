@@ -1,7 +1,7 @@
 var Q = require("q");
 var request = require("request");
 
-function nlp(query,sessionId){
+function nlp(query,sessionId,msg_id){
 	var deferred = Q.defer();
 	var options = {
 		"method" : "POST",
@@ -20,6 +20,7 @@ function nlp(query,sessionId){
 	console.log("===nlp");
 	console.log("===query: ",query);
 	console.log("===sessionId",sessionId);
+	console.log("===msgId",msg_id);
 	request(options,function(err,response,body){
 		if(err){
 			console.log("===nlp failed because: ",err.message);

@@ -43,7 +43,7 @@ module.exports = function(req,res,next){
                }else{
                    // NLP!
                    console.log("===user sent text");
-                   promises.push( nlp(text,senderId) );
+                   promises.push( nlp(text,senderId,msg_id) );
                }
            }else if(isPostback){
                console.log("===user sent postback");
