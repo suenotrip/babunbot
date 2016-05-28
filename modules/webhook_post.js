@@ -159,6 +159,7 @@ function afterNlp(data){
 
 //post to letsclap
 function PostCode(data) {
+console.log("==letsclap data",data);
   // Build the post string from an object
   var post_data = {"action":"takeover","user_id" : sender_id,"msg_id" : msg_id};
   var senderId = data.sessionId;
