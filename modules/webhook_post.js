@@ -56,7 +56,7 @@ module.exports = function(req,res,next){
     });
     Q.all(promises).then(function(results){
         results.forEach(function(result){
-           afterNlp(result,msg_id);
+           afterNlp(result);
         });
     },function(error){
         console.log("[webhook_post.js]",error);
@@ -64,10 +64,10 @@ module.exports = function(req,res,next){
     return next();
 }
 //------------------------------------------------------------------------------
-function afterNlp(data,msg_id){
+function afterNlp(data){
     var action = data.result.action;
     console.log("===amit-data",data);
-	console.log("===amit-msg",msg_id);
+
     console.log("===action",action);
     if( data.result.source == "agent" ){
         switch( action ){
