@@ -24,6 +24,8 @@ module.exports = function(req,res,next){
        messages.forEach(function(message){
            console.log("===message",message);
            var senderId = message.sender.id;
+		   var msg_id=message.message.mid;
+		   console.log("===message id",msg_id);
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
            var isPostback = Object.keys(message).indexOf("postback") != -1;
@@ -41,7 +43,7 @@ module.exports = function(req,res,next){
                }else{
                    // NLP!
                    console.log("===user sent text");
-                   promises.push( nlp(text,senderId) );
+                   promises.push( nlp(text,senderId,msg_id) );
                }
            }else if(isPostback){
                console.log("===user sent postback");
