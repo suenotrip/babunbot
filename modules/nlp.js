@@ -36,7 +36,6 @@ function nlp(query,sessionId,msg_id){
 			}
 		}
 	});
-	console.log("==deferred.promise",deferred.promise);
 	return deferred.promise;
 }
 

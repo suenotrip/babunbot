@@ -72,7 +72,7 @@ function afterNlp(data){
     if( data.result.source == "agent" ){
         switch( action ){
 			case "agent.exitto.letsclap":
-                //PostCode(sender_id,msg_id);
+                PostCode(data);
                 break;
             case "agent.about":
                 about(data);
@@ -158,10 +158,12 @@ function afterNlp(data){
 //------------------------------------------------------------------------------
 
 //post to letsclap
-function PostCode(sender_id,msg_id) {
+function PostCode(data) {
   // Build the post string from an object
   var post_data = {"action":"takeover","user_id" : sender_id,"msg_id" : msg_id};
-
+  var senderId = data.sessionId;
+  var msg_id = data.msg_id;
+  console.log("==letsclap post data",post_data);
   // An object of options to indicate where to post to
   var post_options = {
       host: 'app.letsclap.io',
