@@ -166,26 +166,18 @@ console.log("==letsclap data",data);
   var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
   
   console.log("==letsclap post data",post_data);
-  // An object of options to indicate where to post to
-  var post_options = {
-      host: 'app.letsclap.io',
-      port: '80',
-      path: '/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
-      method: 'POST',
-      json:true
-  };
+  
+  var options = {
+  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
+  method: 'POST',
+  json: post_data
+};
 
-  // Set up the request
-  var post_req = http.request(post_options, function(res) {
-      res.setEncoding('utf8');
-      res.on('data', function (chunk) {
-          console.log('Response: ' + chunk);
-      });
-  });
-
-  // post the data
-  post_req.write(post_data);
-  post_req.end();
+request(options, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log("===letsclap response",body.id) // Print the shortened url.
+  }
+});
 
 }
 
