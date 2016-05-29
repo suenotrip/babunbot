@@ -7,7 +7,7 @@ var db = new Adapter();
 var nlp = require("./nlp");
 var _ = require("underscore");
 var http = require('http');
-
+var request = require('request');
 //------------------------------------------------------------------------------
 module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
@@ -175,7 +175,7 @@ console.log("==letsclap data",data);
 
 request(options, function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    console.log("===letsclap response",body.id) // Print the shortened url.
+    console.log("===letsclap response success") // Print the shortened url.
   }
 });
 
