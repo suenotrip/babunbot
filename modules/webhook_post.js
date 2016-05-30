@@ -341,22 +341,21 @@ function submitTool(data){
 	//enter email for the product
 	else if (context_name.toString().trim()==="submit-tooldesc")
 	{
-		if(context_lifespan===1)
-		{
-			return db.getMessagesOfType("form_product_email").then(function(messages){
-				var message = oneOf(messages);
-				var text = message.text;
-				return fb.reply( fb.textMessage(text), senderId);
-			},function(error){
-				console.log("[webhook_post.js]",error);
-			});
-		}
-		//save the params value in db
-		else{
 		
-			return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
-		}
+		return db.getMessagesOfType("form_product_email").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+			return fb.reply( fb.textMessage(text), senderId);
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+		
+		
 	}
+	else{
+	//save the params value in db
+		return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
+		}
 	
 }
 //------------------------------------------------------------------------------
