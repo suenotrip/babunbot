@@ -195,7 +195,7 @@ function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
 	
-	if(payload==="services"))
+	if(payload==="services")
 	{
 		var text="details of services";
 		return fb.reply( fb.textMessage(text), senderId);
