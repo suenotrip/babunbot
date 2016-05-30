@@ -229,9 +229,17 @@ function help(data){
         var text = message.text;
 		
 		var button1=fb.createButton("Services","services");
-		
 		var button2=fb.createButton("Tools","tools");
-		var message=fb.buttonTextMessage(button1,button2,text);
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2]
+							}
+						}
+					};
 		return fb.reply(message,senderId);
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
