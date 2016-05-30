@@ -20,16 +20,16 @@ function imageMessage(url){
     }
 }
 
-function buttonTextMessage(buttons,text){
+function buttonTextMessage(button1,button2,text){
     return {
-        "attachment" : {
-            "type" : "template",
-            "payload" : {
-                "template_type" : "button",
-				"text":text,
-                "buttons" : buttons
-            }
-        }
+        "attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2]
+							}
+					}
     }
 }
 
