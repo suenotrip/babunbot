@@ -225,7 +225,8 @@ function handlePostback(payload,senderId){
 	
 	else if(payload.toString().trim()==="productivity")
 	{
-	     var msg_id="mid.1234";
+		 var promises = [];
+	     var msg_id="1234";
 		 var text="productivity tools";
 		 promises.push( nlp(text,senderId,msg_id) );
 		 Q.all(promises).then(function(results){
