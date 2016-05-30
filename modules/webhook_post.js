@@ -22,14 +22,11 @@ module.exports = function(req,res,next){
        var messages = entry.messaging;
        // get all the messages
        messages.forEach(function(message){
-           console.log("===message",message);
+           //console.log("===message",message);
            var senderId = message.sender.id;
 		   var msg_id=message.message.mid;
 		   
-		   console.log("===Object",Object);
-		   
-
-		   
+		   		   
 		   //check if bot or letsclap has the control
 		   
 		   
@@ -194,14 +191,8 @@ request(options, function (error, response, body) {
 function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
-	
-	if(payload.toString().trim()==="services")
-	{
-		var text="details of services";
-		return fb.reply( fb.textMessage(text), senderId);
-	}
-	
-    else if( /excerpt \d+/i.test(payload) ){
+
+    if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
         return db.getExcerptFor(id).then(function(excerpts){
