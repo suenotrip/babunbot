@@ -297,14 +297,28 @@ function about(data){
 //------------------------------------------------------------------------------
 function submitTool(data){
 	console.log("===context name",data.result.contexts[0].name);
-    var senderId = data.sessionId;
-    return db.getMessagesOfType("form_product_name").then(function(messages){
-        var message = oneOf(messages);
-        var text = message.text;
-        return fb.reply( fb.textMessage(text), senderId);
-    },function(error){
-        console.log("[webhook_post.js]",error);
-    });
+	var senderId = data.sessionId;
+	var context_name=data.result.contexts[0].name;
+	if(context_name.toString().trim()==="submit-tool")
+	{
+		return db.getMessagesOfType("form_product_name").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+			return fb.reply( fb.textMessage(text), senderId);
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
+	else if (context_name.toString().trim()==="submit-email")
+	{
+		return db.getMessagesOfType("form_product_email").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+			return fb.reply( fb.textMessage(text), senderId);
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
 }
 //------------------------------------------------------------------------------
 function help(data){
