@@ -228,13 +228,9 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var button1=fb.createButton("Tell Me More","services");
+		var button1=fb.createButton("Services","services");
 		
-		var button2={
-						"type":"postback",
-						"title":"Start Chatting",
-						"payload":"USER_DEFINED_PAYLOAD"
-					};
+		var button2=fb.createButton("Tools","tools");
 		var message={
 			"attachment":{
 				"type":"template",
