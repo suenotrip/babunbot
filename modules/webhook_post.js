@@ -304,6 +304,8 @@ function submitTool(data){
 	var contexts=findContextsWithLifespan(data.result.contexts)
 	if (contexts != undefined || contexts.length != 0) {
     //ask form questions one by one
+	console.log("===context length",contexts.length);
+	
 		var context=contexts.pop();
 		var context_name=context.name;
 		//enter a tool name
