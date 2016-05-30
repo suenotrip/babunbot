@@ -228,7 +228,7 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var buttons:[
+		var buttons=[
           {
             "type":"postback",
             "title":"Services"
@@ -239,7 +239,7 @@ function help(data){
             "title":"Tools",
             "payload":"tools"
           }
-        ]
+        ];
 		
 		return fb.reply(fb.buttonTextMessage(buttons,text),senderId);
         //return fb.reply( fb.textMessage(text), senderId);
