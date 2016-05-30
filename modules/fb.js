@@ -7,6 +7,8 @@ function textMessage(message){
     }
 }
 //--------------------------------------------------------------------------------
+
+
 function imageMessage(url){
     return {
         "attachment" :{
@@ -17,6 +19,20 @@ function imageMessage(url){
         }
     }
 }
+
+function buttonTextMessage(buttons,text){
+    return {
+        "attachment" : {
+            "type" : "template",
+            "payload" : {
+                "template_type" : "button",
+				"text":text,
+                "buttons" : buttons
+            }
+        }
+    }
+}
+
 //--------------------------------------------------------------------------------
 function carouselMessage(elements){
     return {

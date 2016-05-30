@@ -25,6 +25,7 @@ module.exports = function(req,res,next){
            console.log("===message",message);
            var senderId = message.sender.id;
 		   var msg_id=message.message.mid;
+		   
 		   console.log("===Object",Object);
 		   
 
@@ -226,7 +227,15 @@ function help(data){
     return db.getMessagesOfType("help").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-        return fb.reply( fb.textMessage(text), senderId);
+		
+		var button1 = fb.createButton("Service","service");
+		var button2 = fb.createButton("Tool","tool");
+		var buttons=[];
+		buttons.push(button1);
+		buttons.push(button2);
+		
+		return fb.reply(fb.buttonTextMessage(buttons,text),senderId)
+        //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
