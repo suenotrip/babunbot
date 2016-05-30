@@ -298,8 +298,12 @@ function about(data){
 function submitTool(data){
 	console.log("===context name",data.result.contexts[0].name);
 	var senderId = data.sessionId;
-	var context_name=data.result.contexts[0].name;
-	var context_lifespan=data.result.contexts[0].lifespan;
+	//var context_name=data.result.contexts[0].name;
+	//var context_lifespan=data.result.contexts[0].lifespan;
+	
+	var contexts=findContextsWithLifespan(data.result.contexts)
+	var context=contexts.pop();
+	var context_name=context.name;
 	//enter a tool name
 	if(context_name.toString().trim()==="submit-tool")
 	{
@@ -664,6 +668,18 @@ function findContextsThatMatches(contexts,regex){
     });
     return matchingContexts;
 }
+
+function findContextsWithLifespan(contexts){
+    var matchingContexts = [];
+    contexts.forEach(function(context){
+       var lifespan = context.lifespan;
+       if(lifespan==1){
+           matchingContexts.push(context);
+       }
+    });
+    return matchingContexts;
+}
+
 //------------------------------------------------------------------------------
 function findItemWithPageNumber(array,page){
     var item;
