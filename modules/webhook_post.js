@@ -234,7 +234,7 @@ function help(data){
 		buttons.push(button1);
 		buttons.push(button2);
 		
-		return fb.reply(fb.buttonTextMessage(buttons,text),senderId)
+		return fb.reply(fb.buttonTextMessage(buttons,text),senderId);
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
