@@ -94,6 +94,9 @@ function afterNlp(data){
             case "agent.joke":
                 joke(data);
                 break;
+			case "agent.submit.tool":
+                submitTool(data);
+                break;
             case "agent.list.productivity.tools":
                 listProductivityTools(data);
                 break;
@@ -194,8 +197,17 @@ function handlePostback(payload,senderId){
 
 	if(payload.toString().trim()==="services")
 	{
-		var text="details of services";
-		return fb.reply( fb.textMessage(text), senderId);
+		var promises = [];
+	     var msg_id="1234";
+		 var text="submit tool";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
 	}
 	else if(payload.toString().trim()==="tools")
 	{
@@ -274,6 +286,18 @@ function handlePostback(payload,senderId){
 function about(data){
     var senderId = data.sessionId;
     return db.getMessagesOfType("about").then(function(messages){
+        var message = oneOf(messages);
+        var text = message.text;
+        return fb.reply( fb.textMessage(text), senderId);
+    },function(error){
+        console.log("[webhook_post.js]",error);
+    });
+}
+
+//------------------------------------------------------------------------------
+function submitTool(data){
+    var senderId = data.sessionId;
+    return db.getMessagesOfType("form_product_name").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
         return fb.reply( fb.textMessage(text), senderId);
