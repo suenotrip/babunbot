@@ -26,7 +26,6 @@ function buttonTextMessage(buttons,text){
             "type" : "template",
             "payload" : {
                 "template_type" : "button",
-				"text":text,
                 "buttons" : buttons
             }
         }

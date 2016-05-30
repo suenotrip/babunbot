@@ -228,8 +228,8 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var buttons={"type":"postback","title":"Services","payload":"service"};
-		
+		var buttons=fb.createButton("Services","service");
+		console.log("==btn",buttons);
 		return fb.reply(fb.buttonTextMessage([buttons],text),senderId);
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
