@@ -299,6 +299,8 @@ function submitTool(data){
 	console.log("===context name",data.result.contexts[0].name);
 	var senderId = data.sessionId;
 	var context_name=data.result.contexts[0].name;
+	var context_lifespan=data.result.contexts[0].lifespan;
+	//enter a tool name
 	if(context_name.toString().trim()==="submit-tool")
 	{
 		return db.getMessagesOfType("form_product_name").then(function(messages){
@@ -309,9 +311,10 @@ function submitTool(data){
 			console.log("[webhook_post.js]",error);
 		});
 	}
-	else if (context_name.toString().trim()==="submit-email")
+	//enter website of the product
+	else if (context_name.toString().trim()==="submit-toolname")
 	{
-		return db.getMessagesOfType("form_product_email").then(function(messages){
+		return db.getMessagesOfType("form_product_web").then(function(messages){
 			var message = oneOf(messages);
 			var text = message.text;
 			return fb.reply( fb.textMessage(text), senderId);
@@ -319,6 +322,38 @@ function submitTool(data){
 			console.log("[webhook_post.js]",error);
 		});
 	}
+	
+	//enter description of the product
+	else if (context_name.toString().trim()==="submit-toolweb")
+	{
+		return db.getMessagesOfType("form_product_desc").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+			return fb.reply( fb.textMessage(text), senderId);
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
+	//enter email for the product
+	else if (context_name.toString().trim()==="submit-tooldescription")
+	{
+		if(context_lifespan===1)
+		{
+			return db.getMessagesOfType("form_product_email").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
+		}
+		//save the params value in db
+		else{
+		
+			return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
+		}
+	}
+	
 }
 //------------------------------------------------------------------------------
 function help(data){
