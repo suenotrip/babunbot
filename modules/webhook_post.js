@@ -24,9 +24,8 @@ module.exports = function(req,res,next){
        messages.forEach(function(message){
            //console.log("===message",message);
            var senderId = message.sender.id;
-		   var msg_id=message.message.mid;
 		   
-		   		   
+		   
 		   //check if bot or letsclap has the control
 		   
 		   
@@ -35,6 +34,7 @@ module.exports = function(req,res,next){
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
            var isPostback = Object.keys(message).indexOf("postback") != -1;
            if( isTextMessage ){
+			   var msg_id=message.message.mid;
                var text = message.message.text;
                console.log("===text message",text);
                // in case of text messages
