@@ -296,7 +296,7 @@ function about(data){
 
 //------------------------------------------------------------------------------
 function submitTool(data){
-	console.log("===context name",data.contexts[0].name);
+	console.log("===context name",data.result.contexts[0].name);
     var senderId = data.sessionId;
     return db.getMessagesOfType("form_product_name").then(function(messages){
         var message = oneOf(messages);
