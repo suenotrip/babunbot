@@ -228,13 +228,20 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var button1 = fb.createButton("Service","service");
-		var button2 = fb.createButton("Tool","tool");
-		var buttons=[];
-		buttons.push(button1);
-		buttons.push(button2);
+		var buttons:[
+          {
+            "type":"postback",
+            "title":"Services"
+			"payload":"service"
+          },
+          {
+            "type":"postback",
+            "title":"Tools",
+            "payload":"tools"
+          }
+        ]
 		
-		return fb.reply(fb.buttonTextMessage([buttons],text),senderId);
+		return fb.reply(fb.buttonTextMessage(buttons,text),senderId);
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
