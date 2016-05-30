@@ -197,7 +197,31 @@ function handlePostback(payload,senderId){
 		var text="details of services";
 		return fb.reply( fb.textMessage(text), senderId);
 	}
+	else if(payload.toString().trim()==="tools")
+	{
+
+		return db.getMessagesOfType("tools").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+			
+			var button1=fb.createButton("Productivity Tools","productivity");
+			var button2=fb.createButton("Marketing Tools","marketing");
+			var message={
+				"attachment":{
+					"type":"template",
+					"payload":{
+						"template_type":"button",
+						"text":text,
+						"buttons":[button1,button2]
+								}
+							}
+						};
+			return fb.reply(message,senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
 	
+	}
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
