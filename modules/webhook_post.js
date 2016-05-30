@@ -320,7 +320,22 @@ function hello(data){
     return db.getMessagesOfType("hello").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-        return fb.reply( fb.textMessage(text), senderId);
+		
+		var button1=fb.createButton("Services","services");
+		var button2=fb.createButton("Tools","tools");
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2]
+							}
+						}
+					};
+		return fb.reply(message,senderId);
+		
+        //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
