@@ -230,8 +230,8 @@ function help(data){
 		
 		var buttons=fb.createButton("Services","service");
 		console.log("==btn",buttons);
-		return fb.reply(fb.buttonTextMessage([buttons],text),senderId);
-        //return fb.reply( fb.textMessage(text), senderId);
+		//return fb.reply(fb.buttonTextMessage([buttons],text),senderId);
+        return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
