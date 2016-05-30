@@ -339,7 +339,7 @@ function submitTool(data){
 		});
 	}
 	//enter email for the product
-	else if (context_name.toString().trim()==="submit-tooldescription")
+	else if (context_name.toString().trim()==="submit-tooldesc")
 	{
 		if(context_lifespan===1)
 		{
