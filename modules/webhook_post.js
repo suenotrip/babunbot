@@ -238,6 +238,22 @@ function handlePostback(payload,senderId){
 		});
 	
 	}
+	else if(payload.toString().trim()==="marketing")
+	{
+		 var promises = [];
+	     var msg_id="1234";
+		 var text="marketing tools";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	
+	}
+	
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
