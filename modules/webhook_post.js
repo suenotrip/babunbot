@@ -228,26 +228,24 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		//var buttons=fb.createButton("Services","service");
-		//console.log("==btn",buttons);
+		var button1={
+						"type":"web_url",
+						"url":"https://petersapparel.parseapp.com",
+						"title":"Show Website"
+					};
+		
+		var button2={
+						"type":"postback",
+						"title":"Start Chatting",
+						"payload":"USER_DEFINED_PAYLOAD"
+					};
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[
-								{
-									"type":"web_url",
-									"url":"https://petersapparel.parseapp.com",
-									"title":"Show Website"
-								},
-								{
-									"type":"postback",
-									"title":"Start Chatting",
-									"payload":"USER_DEFINED_PAYLOAD"
-								 }
-								]
+					"buttons":[button1,button2]
 							}
 						}
 					};
