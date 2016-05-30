@@ -194,7 +194,14 @@ request(options, function (error, response, body) {
 function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
-    if( /excerpt \d+/i.test(payload) ){
+	
+	if(payload==="services"))
+	{
+		var text="details of services";
+		return fb.reply( fb.textMessage(text), senderId);
+	}
+	
+    else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
         return db.getExcerptFor(id).then(function(excerpts){
