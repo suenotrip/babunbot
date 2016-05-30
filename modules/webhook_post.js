@@ -228,11 +228,7 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var button1={
-						"type":"web_url",
-						"url":"https://petersapparel.parseapp.com",
-						"title":"Show Website"
-					};
+		var button1=fb.createButton("Tell Me More","services");
 		
 		var button2={
 						"type":"postback",
