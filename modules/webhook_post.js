@@ -302,7 +302,7 @@ function submitTool(data){
 	//var context_lifespan=data.result.contexts[0].lifespan;
 	
 	var contexts=findContextsWithLifespan(data.result.contexts)
-	if (contexts === undefined || contexts.length == 0) {
+	if (contexts != undefined || contexts.length != 0) {
     //ask form questions one by one
 		var context=contexts.pop();
 		var context_name=context.name;
