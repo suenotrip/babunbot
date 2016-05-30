@@ -228,10 +228,31 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 		
-		var buttons=fb.createButton("Services","service");
-		console.log("==btn",buttons);
-		//return fb.reply(fb.buttonTextMessage([buttons],text),senderId);
-        return fb.reply( fb.textMessage(text), senderId);
+		//var buttons=fb.createButton("Services","service");
+		//console.log("==btn",buttons);
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":"What do you want to do next?",
+					"buttons":[
+								{
+									"type":"web_url",
+									"url":"https://petersapparel.parseapp.com",
+									"title":"Show Website"
+								},
+								{
+									"type":"postback",
+									"title":"Start Chatting",
+									"payload":"USER_DEFINED_PAYLOAD"
+								 }
+								]
+							}
+						}
+					};
+		return fb.reply(message,senderId);
+        //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
