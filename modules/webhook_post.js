@@ -16,8 +16,10 @@ module.exports = function(req,res,next){
     // causing you to accidentally spam the user.
     console.log("===Received a message from FB");
 	
-	var action=req.body.action || "no action";
+	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
+	
+	
 	
     res.end();
     // get all the entries
@@ -29,10 +31,23 @@ module.exports = function(req,res,next){
        messages.forEach(function(message){
            //console.log("===message",message);
            var senderId = message.sender.id;
+		  
+		   //check if bot or letsclap has the control. 
+		   // query to check if the user exists. if yes, then get is_botactive. else insert a new row
+		   var is_botactive=checkControlOfChat(senderId);
 		   
-		   
-		   //check if bot or letsclap has the control
-		   
+		   if(is_botactive==0){
+			console.log("===control lies with letsclap");
+		   }
+		   else if(is_botactive==1)
+		   {
+			console.log("===control lies with bot");
+		   }
+		   else if(is_botactive===2)
+		   {
+			console.log("===inserting a new row to the bot_users");
+			var new_user=insertNewBotUser(senderId);
+		   }
 		   
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
@@ -193,8 +208,31 @@ request(options, function (error, response, body) {
 
 }
 
+function checkControlOfChat(senderId){
+	return db.getBotUser(senderId).then(function(rows){
+		if (rows.length>0)
+		{
+			return rows[0].is_botactive;
+		}
+		else
+		{
+			return 2;
+		}
+		
+	},function(error){
+		console.log("[webhook_post.js]",error);
+	});
+}
 
+function insertNewBotUser(senderId){
+	return db.insertBotUser(senderId).then(function(result){
+		return result;
+		
+	},function(error){
+		console.log("[webhook_post.js]",error);
+	});
 
+}
 function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
