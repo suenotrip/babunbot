@@ -81,7 +81,7 @@ module.exports = function(req,res,next){
     });
     Q.all(promises).then(function(results){
         results.forEach(function(result){
-			checkControl(result);
+			checkControlOfChat(data);
            //afterNlp(result);
         });
     },function(error){
@@ -90,12 +90,7 @@ module.exports = function(req,res,next){
     return next();
 }
 //------------------------------------------------------------------------------
-function checkControl(data){
 
-	checkControlOfChat(data.sessionId);
-    
-
-}
 
 function afterNlp(data){
     
@@ -218,20 +213,24 @@ request(options, function (error, response, body) {
 
 }
 
-function checkControlOfChat(senderId){
-	return db.getBotUser(senderId).then(function(rows){
+function checkControlOfChat(data){
+	return db.getBotUser(data.sessionId).then(function(rows){
 		if (rows.length>0)
 		{
 		  if(rows.is_botactive==0){console.log("===control lies with letsclap");}
 			
-		  else{console.log("===control lies with bot");}
+		  else{
+			console.log("===control lies with bot");
+			afterNlp(data);
+		  }
 		
 		}
 		else
 		{
 			
 			console.log("===inserting a new row to the bot_users");
-			var new_user=insertNewBotUser(senderId);
+			var new_user=insertNewBotUser(data.sessionId);
+			afterNlp(data);
 		
 		}
 		
