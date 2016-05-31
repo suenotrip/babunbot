@@ -363,11 +363,11 @@ function submitTool(data){
 	else
 	{
 	//save the params value in db
-		var tool-name=data.result.parameters.tool-name;
+		var toolname=data.result.parameters.tool-name;
 		var website=data.result.parameters.website;
 		var description=data.result.parameters.description;
 		var email=data.result.parameters.tool-email;
-		console.log("tool-name",tool-name);
+		console.log("tool-name",toolname);
 		console.log("website",website);
 		console.log("description",description);
 		console.log("email",email);
