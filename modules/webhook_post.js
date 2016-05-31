@@ -81,7 +81,8 @@ module.exports = function(req,res,next){
     });
     Q.all(promises).then(function(results){
         results.forEach(function(result){
-           afterNlp(result);
+			checkControl(result);
+           //afterNlp(result);
         });
     },function(error){
         console.log("[webhook_post.js]",error);
@@ -89,9 +90,30 @@ module.exports = function(req,res,next){
     return next();
 }
 //------------------------------------------------------------------------------
+function checkControl(data){
+
+	this.checkControlOfChat(data.sessionId).then(function(is_botactive){
+    console.log("===bot_active==",is_botactive);
+	if(is_botactive==0){
+		console.log("===control lies with letsclap");
+	   }
+	   else if(is_botactive==1)
+	   {
+		console.log("===control lies with bot");
+	   }
+	   else if(is_botactive==2)
+	   {
+		console.log("===inserting a new row to the bot_users");
+		var new_user=insertNewBotUser(data.sessionId);
+	   }
+	});
+
+}
+
 function afterNlp(data){
-    var action = data.result.action;
-    console.log("===amit-data",data);
+    
+	
+   var action = data.result.action;
 
     console.log("===action",action);
     if( data.result.source == "agent" ){
