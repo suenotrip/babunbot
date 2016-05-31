@@ -29,9 +29,9 @@ module.exports = function(req,res,next){
 		   
 		   //check if bot or letsclap has the control
 		   moment().format();
-		   var now=moment();
-		   console.log("moment now time",now);
-		   var unix_time =moment(now, "X");
+		   //var now=moment();
+		   //console.log("moment now time",now);
+		   var unix_time =moment().format('x');
 		   console.log("moment unix time",unix_time);
 		   
            // check if it is a text message
