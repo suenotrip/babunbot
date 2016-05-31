@@ -81,7 +81,7 @@ module.exports = function(req,res,next){
     });
     Q.all(promises).then(function(results){
         results.forEach(function(result){
-			checkControlOfChat(data);
+			checkControlOfChat(result);
            //afterNlp(result);
         });
     },function(error){
