@@ -217,7 +217,7 @@ function checkControlOfChat(data){
 	return db.getBotUser(data.sessionId).then(function(rows){
 		if (rows.length>0)
 		{
-		  if(rows.is_botactive==0){console.log("===control lies with letsclap");}
+		  if(rows[0].is_botactive==0){console.log("===control lies with letsclap");}
 			
 		  else{
 			console.log("===control lies with bot");
