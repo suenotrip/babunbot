@@ -32,6 +32,7 @@ module.exports = function(req,res,next){
 		   //var now=moment();
 		   //console.log("moment now time",now);
 		   var unix_time =moment().format('x');
+		   unix_time=unix_time/1000;
 		   console.log("moment unix time",unix_time);
 		   
            // check if it is a text message
