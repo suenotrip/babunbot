@@ -117,7 +117,11 @@ Adapter.prototype.getExcerptFor = function(id){
 //insert a new record in submit tool table
 Adapter.prototype.insertToolTo = function(toolname,website,description,email){
     const query = "INSERT INTO bn_cf7dbplugin_submits(submit_time,form_name,field_name,field_value,field_order)" +
-                  "VALUES('1464681077.320','Submit a Tool','Whatisthename'," + this.db.escape(toolname) + ",'1')";
+                  "VALUES('1464681077.325','Submit a Tool','Whatisthename'," + this.db.escape(toolname) + ",'0')," +
+				  "('1464681077.325','Submit a Tool','Whatisthewebsite'," + this.db.escape(website) + ",'1')," +
+				  "('1464681077.325','Submit a Tool','Provideashort'," + this.db.escape(description) + ",'2')," +
+				  "('1464681077.325','Submit a Tool','Whatisyouremail'," + this.db.escape(email) + ",'3')";
+				  
     var deferred = Q.defer();
     this.db.getConnection(function(err,connection){
         if(err){
