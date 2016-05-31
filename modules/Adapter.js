@@ -6,6 +6,7 @@
 var Firebase = require("firebase");
 var mysql = require("mysql");
 var Q = require("q");
+var moment = require('moment');
 var options = {
     "host" : process.env.MYSQL_HOST,
     "port" : process.env.MYSQL_PORT,
@@ -115,12 +116,17 @@ Adapter.prototype.getExcerptFor = function(id){
 
 //------------------------------------------------------------------------------
 //insert a new record in submit tool table
+//moment().format();
+
 Adapter.prototype.insertToolTo = function(toolname,website,description,email){
+	var unix_time =moment().format('x');
+	unix_time=unix_time/1000;
+	//console.log("moment unix time",unix_time);
     const query = "INSERT INTO bn_cf7dbplugin_submits(submit_time,form_name,field_name,field_value,field_order)" +
-                  "VALUES('1464681077.325','Submit a Tool','Whatisthename'," + this.db.escape(toolname) + ",'0')," +
-				  "('1464681077.325','Submit a Tool','Whatisthewebsite'," + this.db.escape(website) + ",'1')," +
-				  "('1464681077.325','Submit a Tool','Provideashort'," + this.db.escape(description) + ",'2')," +
-				  "('1464681077.325','Submit a Tool','Whatisyouremail'," + this.db.escape(email) + ",'3')";
+                  "VALUES(" + this.db.escape(unix_time)+",'Submit a Tool','Whatisthename'," + this.db.escape(toolname) + ",'0')," +
+				  "(" + this.db.escape(unix_time)+",'Submit a Tool','Whatisthewebsite'," + this.db.escape(website) + ",'1')," +
+				  "(" + this.db.escape(unix_time)+",'Submit a Tool','Provideashort'," + this.db.escape(description) + ",'2')," +
+				  "(" + this.db.escape(unix_time)+",'Submit a Tool','Whatisyouremail'," + this.db.escape(email) + ",'3')";
 				  
     var deferred = Q.defer();
     this.db.getConnection(function(err,connection){
