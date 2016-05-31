@@ -372,7 +372,16 @@ function submitTool(data){
 		console.log("description",description);
 		console.log("email",email);
 		
-		return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
+		
+		return db.insertToolTo(toolname,website,description,email).then(function(result){
+            
+            console.log("===insertion result is",result);
+            return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
+        },function(error){
+            console.log("[webhook_post.js]",error);
+        })
+		
+		
 	}
 	
 }

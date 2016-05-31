@@ -112,5 +112,29 @@ Adapter.prototype.getExcerptFor = function(id){
     });
     return deferred.promise;
 }
+
+//------------------------------------------------------------------------------
+//insert a new record in submit tool table
+Adapter.prototype.insertToolTo = function(toolname,website,description,email){
+    const query = "INSERT INTO bn_cf7dbplugin_submits(submit_time,form_name,field_name,field_value,field_order)" +
+                  "VALUES('1464681077.320','Submit a Tool','Whatisthename'," + this.db.escape(toolname) + ",'1')";
+    var deferred = Q.defer();
+    this.db.getConnection(function(err,connection){
+        if(err){
+            deferred.reject(err);
+        }else{
+            connection.query(query,[],function(err,results){
+                connection.release();
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(results);
+                }
+            });
+        }
+    });
+    return deferred.promise;
+}
+
 //------------------------------------------------------------------------------
 module.exports = Adapter;
