@@ -32,24 +32,7 @@ module.exports = function(req,res,next){
            //console.log("===message",message);
            var senderId = message.sender.id;
 		  
-		   //check if bot or letsclap has the control. 
-		   // query to check if the user exists. if yes, then get is_botactive. else insert a new row
-		   var is_botactive=checkControlOfChat(senderId);
-		   console.log("===bot_active==",is_botactive);
-		   
-		   if(is_botactive==0){
-			console.log("===control lies with letsclap");
-		   }
-		   else if(is_botactive==1)
-		   {
-			console.log("===control lies with bot");
-		   }
-		   else if(is_botactive==2)
-		   {
-			console.log("===inserting a new row to the bot_users");
-			var new_user=insertNewBotUser(senderId);
-		   }
-		   
+		  		   
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
            var isPostback = Object.keys(message).indexOf("postback") != -1;
