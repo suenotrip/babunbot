@@ -15,6 +15,10 @@ module.exports = function(req,res,next){
     // Without this, the request will timeout and FB will resend it
     // causing you to accidentally spam the user.
     console.log("===Received a message from FB");
+	
+	var action=req.body.action || "no action";
+	console.log("==letsclap params",action);
+	
     res.end();
     // get all the entries
     var entries = req.body.entry;
@@ -368,10 +372,9 @@ function submitTool(data){
 		console.log("email",email);
 		
 		
-		return db.insertToolTo(toolname,website,description,email).then(function(result){
-            
+		return db.insertToolTo(toolname,website,description,email).then(function(result){   
             console.log("===insertion result is",result);
-            return fb.reply( fb.textMessage("Your tool has been submitted"), senderId);
+            return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
         },function(error){
             console.log("[webhook_post.js]",error);
         })
