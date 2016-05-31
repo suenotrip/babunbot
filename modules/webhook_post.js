@@ -8,6 +8,7 @@ var nlp = require("./nlp");
 var _ = require("underscore");
 var http = require('http');
 var request = require('request');
+var moment = require('moment');
 //------------------------------------------------------------------------------
 module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
@@ -28,7 +29,10 @@ module.exports = function(req,res,next){
 		   
 		   //check if bot or letsclap has the control
 		   
-		   
+		   var now=moment();
+		   console.log("moment now time",now);
+		   var unix_time =moment(now, "X");
+		   console.log("moment unix time",unix_time);
 		   
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
