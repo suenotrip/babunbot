@@ -191,6 +191,9 @@ console.log("==letsclap data",data);
 request(options, function (error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log("===letsclap response success") // Print the shortened url.
+	console.log("===letscla response ",response);
+	console.log("===letscla body ",body);
+	
   }
 });
 
