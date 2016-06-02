@@ -14,16 +14,16 @@ module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
     // Without this, the request will timeout and FB will resend it
     // causing you to accidentally spam the user.
-    
-	
+
+
 	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
 	 res.end();
 if(action=='facebook')
 {
 	console.log("===Received a message from FB");
-	
-   
+
+
     // get all the entries
     var entries = req.body.entry;
     var promises = [];
@@ -33,8 +33,8 @@ if(action=='facebook')
        messages.forEach(function(message){
            //console.log("===message",message);
            var senderId = message.sender.id;
-		  
-		  		   
+
+
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
            var isPostback = Object.keys(message).indexOf("postback") != -1;
@@ -73,7 +73,7 @@ if(action=='facebook')
         console.log("[webhook_post.js]",error);
     });
     return next();
-	
+
 }
 else{
 	console.log("===Received a message from letsclap");
@@ -87,8 +87,8 @@ else{
 
 
 function afterNlp(data){
-    
-	
+
+
    var action = data.result.action;
 
     console.log("===action",action);
@@ -190,9 +190,9 @@ console.log("==letsclap data",data);
   var senderId = data.sessionId;
   var msg_id = data.msg_id;
   var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
-  
+
   console.log("==letsclap post data",post_data);
-  
+
 	  var options = {
 	  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
 	  method: 'POST',
@@ -203,7 +203,7 @@ console.log("==letsclap data",data);
 	  if (!error && response.statusCode == 200) {
 		console.log("===letsclap response success") // Print the shortened url.
 		//console.log("===letscla response ",response);
-		
+
 	  }
 	});
 	updateUserStatus(senderId,0);
@@ -216,22 +216,22 @@ function checkControlOfChat(data){
 		if (rows.length>0)
 		{
 		  if(rows[0].is_botactive==0){console.log("===control lies with letsclap");}
-			
+
 		  else{
 			console.log("===control lies with bot");
 			afterNlp(data);
 		  }
-		
+
 		}
 		else
 		{
-			
+
 			console.log("===inserting a new row to the bot_users");
 			var new_user=insertNewBotUser(data.sessionId);
 			afterNlp(data);
-		
+
 		}
-		
+
 	},function(error){
 		console.log("[webhook_post.js]",error);
 	});
@@ -240,7 +240,7 @@ function checkControlOfChat(data){
 function insertNewBotUser(senderId){
 	return db.insertBotUser(senderId).then(function(result){
 		return result;
-		
+
 	},function(error){
 		console.log("[webhook_post.js]",error);
 	});
@@ -250,7 +250,7 @@ function insertNewBotUser(senderId){
 function updateUserStatus(senderId,is_botactive){
 	return db.updateUserStatus(senderId,is_botactive).then(function(result){
 		return result;
-		
+
 	},function(error){
 		console.log("[webhook_post.js]",error);
 	});
@@ -281,7 +281,7 @@ function handlePostback(payload,senderId){
 		return db.getMessagesOfType("tools").then(function(messages){
 			var message = oneOf(messages);
 			var text = message.text;
-			
+
 			var button1=fb.createButton("Productivity Tools","productivity");
 			var button2=fb.createButton("Marketing Tools","marketing");
 			var message={
@@ -298,9 +298,9 @@ function handlePostback(payload,senderId){
 			},function(error){
 				console.log("[webhook_post.js]",error);
 			});
-	
+
 	}
-	
+
 	else if(payload.toString().trim()==="productivity")
 	{
 		 var promises = [];
@@ -314,7 +314,7 @@ function handlePostback(payload,senderId){
 		},function(error){
 			console.log("[webhook_post.js]",error);
 		});
-	
+
 	}
 	else if(payload.toString().trim()==="marketing")
 	{
@@ -329,9 +329,9 @@ function handlePostback(payload,senderId){
 		},function(error){
 			console.log("[webhook_post.js]",error);
 		});
-	
+
 	}
-	
+
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
@@ -366,12 +366,12 @@ function submitTool(data){
 	var senderId = data.sessionId;
 	//var context_name=data.result.contexts[0].name;
 	//var context_lifespan=data.result.contexts[0].lifespan;
-	
+
 	var contexts=findContextsWithLifespan(data.result.contexts)
 	if (contexts != undefined && contexts.length != 0) {
     //ask form questions one by one
 	console.log("===context length",contexts.length);
-	
+
 		var context=contexts.pop();
 		var context_name=context.name;
 		//enter a tool name
@@ -396,7 +396,7 @@ function submitTool(data){
 				console.log("[webhook_post.js]",error);
 			});
 		}
-		
+
 		//enter description of the product
 		else if (context_name.toString().trim()==="submit-toolweb")
 		{
@@ -411,7 +411,7 @@ function submitTool(data){
 		//enter email for the product
 		else if (context_name.toString().trim()==="submit-tooldesc")
 		{
-			
+
 			return db.getMessagesOfType("form_product_email").then(function(messages){
 				var message = oneOf(messages);
 				var text = message.text;
@@ -432,18 +432,18 @@ function submitTool(data){
 		console.log("website",website);
 		console.log("description",description);
 		console.log("email",email);
-		
-		
+
+
 		return db.insertToolTo(toolname,website,description,email).then(function(result){   
             console.log("===insertion result is",result);
             return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
         },function(error){
             console.log("[webhook_post.js]",error);
         })
-		
-		
+
+
 	}
-	
+
 }
 //------------------------------------------------------------------------------
 function help(data){
@@ -451,7 +451,7 @@ function help(data){
     return db.getMessagesOfType("help").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-		
+
 		var button1=fb.createButton("Services","services");
 		var button2=fb.createButton("Tools","tools");
 		var message={
@@ -540,7 +540,7 @@ function hello(data){
     return db.getMessagesOfType("hello").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-		
+
 		var button1=fb.createButton("Services","services");
 		var button2=fb.createButton("Tools","tools");
 		var message={
@@ -554,7 +554,7 @@ function hello(data){
 						}
 					};
 		return fb.reply(message,senderId);
-		
+
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
