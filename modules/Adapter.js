@@ -198,4 +198,27 @@ Adapter.prototype.insertBotUser = function(userId){
     return deferred.promise;
 }
 //------------------------------------------------------------------------------
+//update the status of user in bot_users table
+Adapter.prototype.updateUserStatus = function(userId,is_botactive){
+	
+    const query = "UPDATE bot_users SET is_botactive =" +
+                   this.db.escape(is_botactive)+ " where user_id ="+this.db.escape(userId);
+				  
+    var deferred = Q.defer();
+    this.db.getConnection(function(err,connection){
+        if(err){
+            deferred.reject(err);
+        }else{
+            connection.query(query,[],function(err,results){
+                connection.release();
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(results);
+                }
+            });
+        }
+    });
+    return deferred.promise;
+}
 module.exports = Adapter;

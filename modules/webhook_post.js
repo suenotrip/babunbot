@@ -179,26 +179,23 @@ console.log("==letsclap data",data);
   var senderId = data.sessionId;
   var msg_id = data.msg_id;
   var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
-  var is_letsclap=0;
+  
   console.log("==letsclap post data",post_data);
   
-  var options = {
-  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
-  method: 'POST',
-  json: post_data
-};
+	  var options = {
+	  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
+	  method: 'POST',
+	  json: post_data
+	};
 
-request(options, function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log("===letsclap response success") // Print the shortened url.
-	//console.log("===letscla response ",response);
-	is_letsclap=1;
-	
-  }
-});
-if(is_letsclap==1){
-console.log("===isletsclap active");
-}
+	request(options, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+		console.log("===letsclap response success") // Print the shortened url.
+		//console.log("===letscla response ",response);
+		
+	  }
+	});
+	updateUserStatus(senderId,0);
 
 }
 
@@ -237,6 +234,17 @@ function insertNewBotUser(senderId){
 	});
 
 }
+
+function updateUserStatus(senderId,is_botactive){
+	return db.updateUserStatus(senderId,is_botactive).then(function(result){
+		return result;
+		
+	},function(error){
+		console.log("[webhook_post.js]",error);
+	});
+
+}
+
 function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
