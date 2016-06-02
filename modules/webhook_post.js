@@ -14,13 +14,18 @@ module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
     // Without this, the request will timeout and FB will resend it
     // causing you to accidentally spam the user.
-    console.log("===Received a message from FB");
+    
 	
 	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
 	
-	
-	
+	if(action=='facebook')
+	{
+		console.log("===Received a message from FB");
+	}
+	else{
+		console.log("===Received a message from letsclap");
+	}
     res.end();
     // get all the entries
     var entries = req.body.entry;
