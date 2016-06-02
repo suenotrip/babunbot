@@ -179,7 +179,7 @@ console.log("==letsclap data",data);
   var senderId = data.sessionId;
   var msg_id = data.msg_id;
   var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
-  
+  var is_letsclap=0;
   console.log("==letsclap post data",post_data);
   
   var options = {
@@ -188,14 +188,17 @@ console.log("==letsclap data",data);
   json: post_data
 };
 
-request(options, function (error, response, body,post_data) {
+request(options, function (error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log("===letsclap response success") // Print the shortened url.
 	//console.log("===letscla response ",response);
-	console.log("===resonse post data ",post_data);
+	is_letsclap=1;
 	
   }
 });
+if(is_letsclap==1){
+console.log("===isletsclap active");
+}
 
 }
 
