@@ -80,7 +80,7 @@ else{
 	var senderId=req.body.user_id;
 	console.log("===letsclap user_id=",senderId);
 	updateUserStatus(senderId,1);
-	return fb.reply("You are back with BOT. Let me know how can i help you again.",senderId);
+	//return fb.reply("You are back with BOT. Let me know how can i help you again.",senderId);
 }	
 }
 //------------------------------------------------------------------------------
@@ -207,6 +207,7 @@ console.log("==letsclap data",data);
 	  }
 	});
 	updateUserStatus(senderId,0);
+	return fb.reply("You are connected with real agent now.",senderId);
 
 }
 
