@@ -79,7 +79,7 @@ else{
 	console.log("===Received a message from letsclap");
 	var senderId=req.body.user_id;
 	console.log("===letsclap user_id=",senderId);
-	updateUserStatus(senderId,0);
+	updateUserStatus(senderId,1);
 }	
 }
 //------------------------------------------------------------------------------
