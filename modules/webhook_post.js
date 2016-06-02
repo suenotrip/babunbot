@@ -207,7 +207,7 @@ console.log("==letsclap data",data);
 	  }
 	});
 	updateUserStatus(senderId,0);
-	return fb.reply("You are connected with real agent now.",senderId);
+	return fb.reply(fb.textMessage("You are connected with real agent now."),senderId);
 
 }
 
