@@ -19,13 +19,10 @@ module.exports = function(req,res,next){
 	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
 	
-	if(action=='facebook')
-	{
-		console.log("===Received a message from FB");
-	}
-	else{
-		console.log("===Received a message from letsclap");
-	}
+if(action=='facebook')
+{
+	console.log("===Received a message from FB");
+	
     res.end();
     // get all the entries
     var entries = req.body.entry;
@@ -76,6 +73,14 @@ module.exports = function(req,res,next){
         console.log("[webhook_post.js]",error);
     });
     return next();
+	
+}
+else{
+	console.log("===Received a message from letsclap");
+	var senderId=req.body.user_id;
+	console.log("===letsclap user_id=",senderId);
+	updateUserStatus(senderId,0);
+}	
 }
 //------------------------------------------------------------------------------
 
