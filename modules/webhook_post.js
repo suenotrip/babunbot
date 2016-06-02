@@ -18,12 +18,12 @@ module.exports = function(req,res,next){
 	
 	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
-	
+	 res.end();
 if(action=='facebook')
 {
 	console.log("===Received a message from FB");
 	
-    res.end();
+   
     // get all the entries
     var entries = req.body.entry;
     var promises = [];
@@ -80,6 +80,7 @@ else{
 	var senderId=req.body.user_id;
 	console.log("===letsclap user_id=",senderId);
 	updateUserStatus(senderId,1);
+	return fb.reply("You are back with BOT. Let me know how can i help you again.",senderId);
 }	
 }
 //------------------------------------------------------------------------------
