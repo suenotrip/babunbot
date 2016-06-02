@@ -188,11 +188,11 @@ console.log("==letsclap data",data);
   json: post_data
 };
 
-request(options, function (error, response, body) {
+request(options, function (error, response, body,post_data) {
   if (!error && response.statusCode == 200) {
     console.log("===letsclap response success") // Print the shortened url.
-	console.log("===letscla response ",response);
-	console.log("===letscla body ",body);
+	//console.log("===letscla response ",response);
+	console.log("===resonse post data ",post_data);
 	
   }
 });
