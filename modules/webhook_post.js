@@ -385,6 +385,127 @@ function about(data){
 function developmentTool(data){
 	console.log("===context name",data.result.contexts[0].name);
 	var senderId = data.sessionId;
+	
+	var contexts=findContextsWithLifespan(data.result.contexts)
+	if (contexts != undefined && contexts.length != 0) {
+    //ask form questions one by one
+	console.log("===context length",contexts.length);
+
+		var context=contexts.pop();
+		var context_name=context.name;
+		//enter a tool name
+		if(context_name.toString().trim()==="development-tool")
+		{
+			return db.getMessagesOfType("service_name").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
+		}
+		//enter email of the product
+		else if (context_name.toString().trim()==="dev-toolname")
+		{
+			return db.getMessagesOfType("service_email").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
+		}
+
+		//enter advance stage of the product
+		else if (context_name.toString().trim()==="dev-toolemail")
+		{
+			return db.getMessagesOfType("service_advance").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
+		}
+		//enter platform for the product
+		else if (context_name.toString().trim()==="dev-tooladvance")
+		{
+
+			return db.getMessagesOfType("service_platform").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});	
+		}	
+		//enter deadline for product
+		else if (context_name.toString().trim()==="dev-toolplatform")
+		{
+
+			return db.getMessagesOfType("service_deadline").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});	
+		}	
+		//enter budget for product
+		else if (context_name.toString().trim()==="dev-tooldeadline")
+		{
+
+			return db.getMessagesOfType("service_budget").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});	
+		}	
+		//enter description for product
+		else if (context_name.toString().trim()==="dev-toolbudget")
+		{
+
+			return db.getMessagesOfType("service_description").then(function(messages){
+				var message = oneOf(messages);
+				var text = message.text;
+				return fb.reply( fb.textMessage(text), senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});	
+		}	
+	}
+	else
+	{
+	//save the params value in db
+		var devtoolname=data.result.parameters.devtoolname;
+		var devtoolemail=data.result.parameters.devtoolemail;
+		var devtooladvance=data.result.parameters.devtooladvance;
+		var devtoolplatform=data.result.parameters.devtoolplatform;
+		var devtooldeadline=data.result.parameters.devtooldeadline;
+		var devtoolbudget=data.result.parameters.devtoolbudget;
+		var devtooldesc=data.result.parameters.devtooldesc;
+		
+		console.log("devtoolname: ",devtoolname);
+		console.log("devtoolemail: ",devtoolemail);
+		console.log("devtooladvance: ",devtooladvance);
+		console.log("devtoolplatform: ",devtoolplatform);
+		console.log("devtooldeadline: ",devtooldeadline);
+		console.log("devtoolbudget: ",devtoolbudget);
+		console.log("devtooldesc: ",devtooldesc);
+		
+
+
+		/* return db.insertToolTo(toolname,website,description,email).then(function(result){   
+            console.log("===insertion result is",result);
+            return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
+        },function(error){
+            console.log("[webhook_post.js]",error);
+        })
+ */
+
+	}
 
 }
 
