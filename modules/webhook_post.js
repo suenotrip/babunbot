@@ -602,6 +602,7 @@ function submitTool(data){
 							}
 						}
 					};
+			return fb.reply(message,senderId);
 			},function(error){
 				console.log("[webhook_post.js]",error);
 			});
