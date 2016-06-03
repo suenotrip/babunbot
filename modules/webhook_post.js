@@ -198,7 +198,27 @@ var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
    console.log("===location 1");
    var senderId = data.sessionId;
-	return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No"),senderId);
+   var choice=data.result.parameters.choice;
+   if(choice..toString().trim()==="yes"){
+		return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No."),senderId);
+	}
+	else{
+		var text="So you decided to continue with BabunBot. Here is what I can help you with.";
+		var button1=fb.createButton("Services","devtool");
+		var button2=fb.createButton("Submit a tool","services");
+		var button3=fb.createButton("Find a Tool","tools");
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2,button3]
+							}
+						}
+					};
+		return fb.reply(message,senderId);
+	}
 }
 else{
 
@@ -730,7 +750,7 @@ function howAreYou(data){
 //------------------------------------------------------------------------------
 function dontKnow(data){
     var senderId = data.sessionId;
-   
+
         var promises = [];
 	    var msg_id = data.msg_id;
 		 var text="connect me with real person";
