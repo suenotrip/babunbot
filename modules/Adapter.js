@@ -41,7 +41,7 @@ Adapter.prototype.getItemsForSubcategory = function(subcat) {
                   "INNER JOIN bn_terms t ON t.term_id = r.term_taxonomy_id " +
                   "WHERE LOWER(t.name) LIKE @subcat AND post_status='publish' " +
                   "ORDER BY RAND()" +
-                  "LIMIT 10 ";
+                  "LIMIT 1 ";
     var newQuery = query.replace("@subcat",this.db.escape(subcat));
     var deferred = Q.defer();
     this.db.getConnection(function(err,connection){
