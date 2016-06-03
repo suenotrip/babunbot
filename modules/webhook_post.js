@@ -118,6 +118,9 @@ function afterNlp(data){
 			case "agent.submit.tool":
                 submitTool(data);
                 break;
+			case "agent.development.tool":
+                developmentTool(data);
+                break;
             case "agent.list.productivity.tools":
                 listProductivityTools(data);
                 break;
@@ -264,7 +267,22 @@ function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
 
-	if(payload.toString().trim()==="services")
+	if(payload.toString().trim()==="devtool")
+	{
+		var promises = [];
+	     var msg_id="1234";
+		 var text="add development tool";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
+	
+	else if(payload.toString().trim()==="services")
 	{
 		var promises = [];
 	     var msg_id="1234";
@@ -361,6 +379,13 @@ function about(data){
     },function(error){
         console.log("[webhook_post.js]",error);
     });
+}
+
+//------------------------------------------------------------------------------
+function developmentTool(data){
+	console.log("===context name",data.result.contexts[0].name);
+	var senderId = data.sessionId;
+
 }
 
 //------------------------------------------------------------------------------
@@ -544,15 +569,16 @@ function hello(data){
         var message = oneOf(messages);
         var text = message.text;
 
-		var button1=fb.createButton("Services","services");
-		var button2=fb.createButton("Tools","tools");
+		var button1=fb.createButton("Services","devtool");
+		var button2=fb.createButton("Submit a tool","services");
+		var button3=fb.createButton("Find a Tool","tools");
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2]
+					"buttons":[button1,button2,button3]
 							}
 						}
 					};
