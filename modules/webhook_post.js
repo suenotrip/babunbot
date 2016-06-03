@@ -193,7 +193,8 @@ function afterNlp(data){
 function PostCode(data) {
 console.log("==letsclap data",data);
 //check if the action is called first time or second
-
+var senderId = data.sessionId;
+var msg_id = data.msg_id;
 var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
    console.log("===location 1");
@@ -208,8 +209,7 @@ else{
 
 	  // Build the post string from an object
 	  console.log("===location 2");
-	  var senderId = data.sessionId;
-	  var msg_id = data.msg_id;
+	  
 	  var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
 
 	  console.log("==letsclap post data",post_data);
