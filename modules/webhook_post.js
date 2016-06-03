@@ -97,6 +97,9 @@ function afterNlp(data){
 			case "agent.exitto.letsclap":
                 PostCode(data);
                 break;
+			case "agent.hello.babun":
+                hello(data);
+                break;
             case "agent.about":
                 about(data);
                 break;
