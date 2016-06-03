@@ -196,11 +196,13 @@ console.log("==letsclap data",data);
 
 var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
+   console.log("===location 1");
 	return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No"),senderId);
 }
 else{
 
   // Build the post string from an object
+  console.log("===location 2");
   var senderId = data.sessionId;
   var msg_id = data.msg_id;
   var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
@@ -729,7 +731,7 @@ function dontKnow(data){
     var senderId = data.sessionId;
    
         var promises = [];
-	     var msg_id="1234";
+	    var msg_id = data.msg_id;
 		 var text="connect me with real person";
 		 promises.push( nlp(text,senderId,msg_id) );
 		 Q.all(promises).then(function(results){
