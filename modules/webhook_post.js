@@ -198,10 +198,40 @@ var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
    console.log("===location 1");
    var senderId = data.sessionId;
-   var choice=data.result.parameters.choice;
-   if(choice.toString().trim()==="yes"){
+  
 		return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No."),senderId);
-	}
+}
+else{
+
+ var choice=data.result.parameters.choice;
+ if(choice.toString().trim()=="yes"){
+
+	  // Build the post string from an object
+	  console.log("===location 2");
+	  var senderId = data.sessionId;
+	  var msg_id = data.msg_id;
+	  var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
+
+	  console.log("==letsclap post data",post_data);
+
+		  var options = {
+		  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
+		  method: 'POST',
+		  json: post_data
+		};
+
+		request(options, function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+			console.log("===letsclap response success") // Print the shortened url.
+			//console.log("===letscla response ",response);
+
+		  }
+		});
+		updateUserStatus(senderId,0);
+		return fb.reply(fb.textMessage("Please wait while I connect you with a real agent."),senderId);
+		}
+	
+
 	else{
 		var text="So you decided to continue with BabunBot. Here is what I can help you with.";
 		var button1=fb.createButton("Services","devtool");
@@ -219,34 +249,7 @@ if (contexts != undefined && contexts.length != 0) {
 					};
 		return fb.reply(message,senderId);
 	}
-}
-else{
-
-  // Build the post string from an object
-  console.log("===location 2");
-  var senderId = data.sessionId;
-  var msg_id = data.msg_id;
-  var post_data = {"action":"takeover","user_id" : senderId,"msg_id" : msg_id};
-
-  console.log("==letsclap post data",post_data);
-
-	  var options = {
-	  uri: 'https://app.letsclap.io/letsclap/takeover/85a6c77062ec6ccf099f7f05af96457e',
-	  method: 'POST',
-	  json: post_data
-	};
-
-	request(options, function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-		console.log("===letsclap response success") // Print the shortened url.
-		//console.log("===letscla response ",response);
-
-	  }
-	});
-	updateUserStatus(senderId,0);
-	return fb.reply(fb.textMessage("Please wait while I connect you with a real agent."),senderId);
-	}
-
+ }
 }
 
 function checkControlOfChat(data){
