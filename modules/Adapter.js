@@ -157,7 +157,7 @@ Adapter.prototype.insertToolToDevelopment = function(devtoolname,devtoolemail,de
 				  "(" + this.db.escape(unix_time)+",'Development','youremail'," + this.db.escape(devtoolemail) + ",'1')," +
 				  "(" + this.db.escape(unix_time)+",'Development','whatisthewebsite'," + this.db.escape(devtooladvance) + ",'2')," +
 				  "(" + this.db.escape(unix_time)+",'Development','platform'," + this.db.escape(devtoolplatform) + ",'3')"+
-				  "(" + this.db.escape(unix_time)+",'Development','platformotht','','4')"+
+				  "(" + this.db.escape(unix_time)+",'Development','platformotht','null','4')"+
 				  "(" + this.db.escape(unix_time)+",'Development','timeframe'," + this.db.escape(devtooldeadline) + ",'5')"+
 				  "(" + this.db.escape(unix_time)+",'Development','budget'," + this.db.escape(devtoolbudget) + ",'6')"+
 				  "(" + this.db.escape(unix_time)+",'Development','describe'," + this.db.escape(devtooldesc) + ",'7')"+
