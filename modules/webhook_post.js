@@ -499,7 +499,28 @@ function developmentTool(data){
 
 		return db.insertToolToDevelopment(devtoolname,devtoolemail,devtooladvance,devtoolplatform,devtooldeadline,devtoolbudget,devtooldesc).then(function(result){   
             console.log("===insertion result is",result);
-            return fb.reply( fb.textMessage("Congratulations!! Your service request is submitted. We will get back to you soon."), senderId);
+            //return fb.reply( fb.textMessage("Congratulations!! Your service request is submitted. We will get back to you soon."), senderId);
+			return db.getMessagesOfType("service_end").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+
+		var button1=fb.createButton("Services","devtool");
+		var button2=fb.createButton("Submit a tool","services");
+		var button3=fb.createButton("Find a Tool","tools");
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2,button3]
+							}
+						}
+					};
+			return fb.reply(message,senderId);
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
         },function(error){
             console.log("[webhook_post.js]",error);
         })
