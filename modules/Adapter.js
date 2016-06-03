@@ -115,7 +115,7 @@ Adapter.prototype.getExcerptFor = function(id){
 }
 
 //------------------------------------------------------------------------------
-//insert a new record in submit tool table
+//insert a new record in bn_cf7dbplugin_submits table
 //moment().format();
 
 Adapter.prototype.insertToolTo = function(toolname,website,description,email){
@@ -146,10 +146,7 @@ Adapter.prototype.insertToolTo = function(toolname,website,description,email){
     return deferred.promise;
 }
 //------------------------------------------------------------------------------
-
-
-/------------------------------------------------------------------------------
-//insert a new record in submit tool table
+//insert a new record in bn_cf7dbplugin_submits table
 
 Adapter.prototype.insertToolToDevelopment = function(devtoolname,devtoolemail,devtooladvance,devtoolplatform,devtooldeadline,devtoolbudget,devtooldesc){
 	var unix_time =moment().format('x');
