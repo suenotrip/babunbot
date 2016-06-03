@@ -353,6 +353,22 @@ function handlePostback(payload,senderId){
 
 	}
 
+	else if(payload.toString().trim()==="letsclap")
+	{
+		 var promises = [];
+	     var msg_id="1234";
+		 var text="connect me with real person";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+
+	}
+	
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
@@ -719,7 +735,20 @@ function dontKnow(data){
     return db.getMessagesOfType("unknown").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-        return fb.reply( fb.textMessage(text), senderId);
+        //return fb.reply( fb.textMessage(text), senderId);
+		var button1=fb.createButton("Connect me with human","letsclap");
+		
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1]
+							}
+						}
+					};
+		return fb.reply(message,senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
