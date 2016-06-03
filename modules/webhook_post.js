@@ -281,7 +281,7 @@ function handlePostback(payload,senderId){
 			console.log("[webhook_post.js]",error);
 		});
 	}
-	
+
 	else if(payload.toString().trim()==="services")
 	{
 		var promises = [];
@@ -385,7 +385,7 @@ function about(data){
 function developmentTool(data){
 	console.log("===context name",data.result.contexts[0].name);
 	var senderId = data.sessionId;
-	
+
 	var contexts=findContextsWithLifespan(data.result.contexts)
 	if (contexts != undefined && contexts.length != 0) {
     //ask form questions one by one
@@ -486,7 +486,7 @@ function developmentTool(data){
 		var devtooldeadline=data.result.parameters.devtooldeadline;
 		var devtoolbudget=data.result.parameters.devtoolbudget;
 		var devtooldesc=data.result.parameters.devtooldesc;
-		
+
 		console.log("devtoolname: ",devtoolname);
 		console.log("devtoolemail: ",devtoolemail);
 		console.log("devtooladvance: ",devtooladvance);
@@ -494,7 +494,7 @@ function developmentTool(data){
 		console.log("devtooldeadline: ",devtooldeadline);
 		console.log("devtoolbudget: ",devtoolbudget);
 		console.log("devtooldesc: ",devtooldesc);
-		
+
 
 
 		return db.insertToolToDevelopment(devtoolname,devtoolemail,devtooladvance,devtoolplatform,devtooldeadline,devtoolbudget,devtooldesc).then(function(result){   
@@ -583,7 +583,28 @@ function submitTool(data){
 
 		return db.insertToolTo(toolname,website,description,email).then(function(result){   
             console.log("===insertion result is",result);
-            return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
+            //return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
+
+		return db.getMessagesOfType("form_product_end").then(function(messages){
+			var message = oneOf(messages);
+			var text = message.text;
+
+		var button1=fb.createButton("Services","devtool");
+		var button2=fb.createButton("Submit a tool","services");
+		var button3=fb.createButton("Find a Tool","tools");
+		var message={
+			"attachment":{
+				"type":"template",
+				"payload":{
+					"template_type":"button",
+					"text":text,
+					"buttons":[button1,button2,button3]
+							}
+						}
+					};
+			},function(error){
+				console.log("[webhook_post.js]",error);
+			});
         },function(error){
             console.log("[webhook_post.js]",error);
         })
