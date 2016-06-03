@@ -197,10 +197,16 @@ var senderId = data.sessionId;
 var msg_id = data.msg_id;
 var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
-   console.log("===location 1");
-   var senderId = data.sessionId;
-  
-		return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No."),senderId);
+   console.log("===do you want to escape to human?");
+   
+	//return fb.reply(fb.textMessage("Sorry! I did not understand that. Do you want to talk with Human? Please say Yes or No."),senderId);
+	return db.getMessagesOfType("escapeto_human").then(function(messages){
+        var message = oneOf(messages);
+        var text = message.text;
+        return fb.reply( fb.textMessage(text), senderId);
+    },function(error){
+        console.log("[webhook_post.js]",error);
+    });
 }
 else{
 
