@@ -881,6 +881,8 @@ function recommendProductivityTools(data){
     var rows
     return db.getItemsForSubcategory(subcat).then(function(rowss){
         rows = rowss; // save a copy
+		
+		console.log("===rows",rows);
         var promises = [];
         // Get all icons
         for(var i = 0; i < rows.length; i++){
