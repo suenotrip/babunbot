@@ -197,6 +197,7 @@ console.log("==letsclap data",data);
 var contexts=findContextsWithLifespan(data.result.contexts)
 if (contexts != undefined && contexts.length != 0) {
    console.log("===location 1");
+   var senderId = data.sessionId;
 	return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No"),senderId);
 }
 else{
