@@ -41,7 +41,7 @@ Adapter.prototype.getItemsForSubcategory = function(subcat) {
                   "INNER JOIN bn_terms t ON t.term_id = r.term_taxonomy_id " +
                   "WHERE LOWER(t.name) LIKE @subcat AND post_status='publish' " +
                   "ORDER BY RAND()" +
-                  "LIMIT 1 ";
+                  "LIMIT 10 ";
     var newQuery = query.replace("@subcat",this.db.escape(subcat));
     var deferred = Q.defer();
     this.db.getConnection(function(err,connection){
@@ -81,7 +81,8 @@ Adapter.prototype.getIconFor = function(id) {
                     deferred.reject(err);
                 }else{
                     if(!results || results.length == 0 ){
-                        return "http://www.babun.io/wp-content/uploads/2016/03/BabunMetaPic-1.png"
+                        //return "http://www.babun.io/wp-content/uploads/2016/03/BabunMetaPic-1.png"
+						deferred.resolve("http://www.babun.io/wp-content/uploads/2016/03/BabunMetaPic-1.png");
                     }else{
                         deferred.resolve(path + results[0].path);
                     }
