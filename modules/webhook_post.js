@@ -897,7 +897,7 @@ function recommendProductivityTools(data){
             var button = fb.createButton("Tell Me More","excerpt "+row.id);
             var excerpt = row.excerpt || "Babun no have description :( Babun later learn, k?";
 			var title=row.title;
-			checked.split('.').join("");
+			title.split('.').join("");
             var element = fb.createElement(title,excerpt,image_url,[button]);
             elements.push(element);
         }
