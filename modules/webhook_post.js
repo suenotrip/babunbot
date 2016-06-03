@@ -192,6 +192,14 @@ function afterNlp(data){
 //post to letsclap
 function PostCode(data) {
 console.log("==letsclap data",data);
+//check if the action is called first time or second
+
+var contexts=findContextsWithLifespan(data.result.contexts)
+if (contexts != undefined && contexts.length != 0) {
+	return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No"),senderId);
+}
+else{
+
   // Build the post string from an object
   var senderId = data.sessionId;
   var msg_id = data.msg_id;
@@ -214,6 +222,7 @@ console.log("==letsclap data",data);
 	});
 	updateUserStatus(senderId,0);
 	return fb.reply(fb.textMessage("Please wait while I connect you with a real agent."),senderId);
+	}
 
 }
 
@@ -353,22 +362,8 @@ function handlePostback(payload,senderId){
 
 	}
 
-	else if(payload.toString().trim()==="letsclap")
-	{
-		 var promises = [];
-	     var msg_id="1234";
-		 var text="connect me with real person";
-		 promises.push( nlp(text,senderId,msg_id) );
-		 Q.all(promises).then(function(results){
-			results.forEach(function(result){
-            afterNlp(result);
-        });
-		},function(error){
-			console.log("[webhook_post.js]",error);
-		});
 
-	}
-	
+
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
@@ -734,21 +729,19 @@ function dontKnow(data){
     var senderId = data.sessionId;
     return db.getMessagesOfType("unknown").then(function(messages){
         var message = oneOf(messages);
-        var text = message.text;
-        //return fb.reply( fb.textMessage(text), senderId);
-		var button1=fb.createButton("Connect me with human","letsclap");
-		
-		var message={
-			"attachment":{
-				"type":"template",
-				"payload":{
-					"template_type":"button",
-					"text":text,
-					"buttons":[button1]
-							}
-						}
-					};
-		return fb.reply(message,senderId);
+        var promises = [];
+	     var msg_id="1234";
+		 var text="connect me with real person";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+
+		//return fb.reply(message,senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
     });
