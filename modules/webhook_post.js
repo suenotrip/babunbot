@@ -199,7 +199,7 @@ if (contexts != undefined && contexts.length != 0) {
    console.log("===location 1");
    var senderId = data.sessionId;
    var choice=data.result.parameters.choice;
-   if(choice..toString().trim()==="yes"){
+   if(choice.toString().trim()==="yes"){
 		return fb.reply(fb.textMessage("Do you want to talk with Human? Please say Yes or No."),senderId);
 	}
 	else{
