@@ -497,14 +497,12 @@ function developmentTool(data){
 		
 
 
-		/* return db.insertToolTo(toolname,website,description,email).then(function(result){   
+		return db.insertToolToDevelopment(devtoolname,devtoolemail,devtooladvance,devtoolplatform,devtooldeadline,devtoolbudget,devtooldesc).then(function(result){   
             console.log("===insertion result is",result);
-            return fb.reply( fb.textMessage("Congratulations!! Your tool has been submitted."), senderId);
+            return fb.reply( fb.textMessage("Congratulations!! Your service request is submitted. We will get back to you soon."), senderId);
         },function(error){
             console.log("[webhook_post.js]",error);
         })
- */
-
 	}
 
 }

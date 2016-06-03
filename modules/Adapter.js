@@ -147,6 +147,46 @@ Adapter.prototype.insertToolTo = function(toolname,website,description,email){
 }
 //------------------------------------------------------------------------------
 
+
+/------------------------------------------------------------------------------
+//insert a new record in submit tool table
+
+Adapter.prototype.insertToolToDevelopment = function(devtoolname,devtoolemail,devtooladvance,devtoolplatform,devtooldeadline,devtoolbudget,devtooldesc){
+	var unix_time =moment().format('x');
+	unix_time=unix_time/1000;
+	//console.log("moment unix time",unix_time);
+    const query = "INSERT INTO bn_cf7dbplugin_submits(submit_time,form_name,field_name,field_value,field_order)" +
+                  "VALUES(" + this.db.escape(unix_time)+",'Development','Whatisthename'," + this.db.escape(devtoolname) + ",'0')," +
+				  "(" + this.db.escape(unix_time)+",'Development','youremail'," + this.db.escape(devtoolemail) + ",'1')," +
+				  "(" + this.db.escape(unix_time)+",'Development','whatisthewebsite'," + this.db.escape(devtooladvance) + ",'2')," +
+				  "(" + this.db.escape(unix_time)+",'Development','platform'," + this.db.escape(devtoolplatform) + ",'3')"+
+				  "(" + this.db.escape(unix_time)+",'Development','platformotht','','4')"+
+				  "(" + this.db.escape(unix_time)+",'Development','timeframe'," + this.db.escape(devtooldeadline) + ",'5')"+
+				  "(" + this.db.escape(unix_time)+",'Development','budget'," + this.db.escape(devtoolbudget) + ",'6')"+
+				  "(" + this.db.escape(unix_time)+",'Development','describe'," + this.db.escape(devtooldesc) + ",'7')"+
+				  "(" + this.db.escape(unix_time)+",'Development','Submitted From','BabunBot','10000')";
+				  
+    var deferred = Q.defer();
+    this.db.getConnection(function(err,connection){
+        if(err){
+            deferred.reject(err);
+        }else{
+            connection.query(query,[],function(err,results){
+                connection.release();
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(results);
+                }
+            });
+        }
+    });
+    return deferred.promise;
+}
+//------------------------------------------------------------------------------
+
+
+
 //get bot user on userid
 Adapter.prototype.getBotUser= function(userId){
 	
