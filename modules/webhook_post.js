@@ -727,8 +727,7 @@ function howAreYou(data){
 //------------------------------------------------------------------------------
 function dontKnow(data){
     var senderId = data.sessionId;
-    return db.getMessagesOfType("unknown").then(function(messages){
-        var message = oneOf(messages);
+   
         var promises = [];
 	     var msg_id="1234";
 		 var text="connect me with real person";
@@ -740,11 +739,6 @@ function dontKnow(data){
 		},function(error){
 			console.log("[webhook_post.js]",error);
 		});
-
-		//return fb.reply(message,senderId);
-    },function(error){
-        console.log("[webhook_post.js]",error);
-    });
 }
 //------------------------------------------------------------------------------
 function hello(data){
