@@ -878,7 +878,7 @@ function recommendProductivityTools(data){
     var senderId = data.sessionId;
     var subcat = data.result.parameters.productivity_tool;
     var elements = [];
-    var rows
+    var rows;
     return db.getItemsForSubcategory(subcat).then(function(rowss){
         rows = rowss; // save a copy
 		
@@ -906,7 +906,40 @@ function recommendProductivityTools(data){
     });
 }
 //------------------------------------------------------------------------------
+
 function recommendMarketingTools(data){
+    var senderId = data.sessionId;
+    var subcat = data.result.parameters.marketing_tool;
+    var elements = [];
+    var rows;
+    return db.getItemsForSubcategory(subcat).then(function(rowss){
+        rows = rowss; // save a copy
+		
+		console.log("===rows",rows);
+        var promises = [];
+        // Get all icons
+        for(var i = 0; i < rows.length; i++){
+            promises.push( db.getIconFor(rows[i].id) );
+        }
+        return Q.all( promises );
+    }).then(function(result){
+        for(var i = 0; i < result.length; i++){
+            var image_url = result[i].valueOf();
+            var row = rows[i];
+            console.log("===image for %s is %s",rows[i].id,image_url);
+            var button = fb.createButton("Tell Me More","excerpt "+row.id);
+            var excerpt = row.excerpt || "Babun no have description :( Babun later learn, k?";
+			
+            var element = fb.createElement(row.title,excerpt,image_url,[button]);
+            elements.push(element);
+        }
+        return fb.reply(fb.carouselMessage(elements),senderId);
+    },function(error){
+        console.log("[webhook_post.js]",error);
+    });
+}
+
+/* function recommendMarketingTools(data){
     var senderId = data.sessionId;
     var subcat = data.result.parameters.marketing_tool;
     return db.getItemsForSubcategory(subcat).then(function(rows){
@@ -922,7 +955,7 @@ function recommendMarketingTools(data){
     },function(error){
         console.log("[webhook_post.js]",error);
     });
-}
+} */
 //------------------------------------------------------------------------------
 function findMeATool(data){
     var senderId = data.sessionId;
