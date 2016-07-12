@@ -15,6 +15,7 @@
     "q": "^1.4.1",
     "request": "^2.72.0",
     "restify": "^4.0.4",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+	"dashbot":"^0.6.2"
   }
 }

@@ -8,22 +8,23 @@ var nlp = require("./nlp");
 var _ = require("underscore");
 var http = require('http');
 var request = require('request');
-
+//var dashbot=require("./dashbot");
+var dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).facebook;
 //------------------------------------------------------------------------------
 module.exports = function(req,res,next){
     // Tell FB that we have received the request by ending it.
     // Without this, the request will timeout and FB will resend it
     // causing you to accidentally spam the user.
 
-
+	
 	var action=req.body.action || "facebook";
 	console.log("==letsclap params",action);
 	 res.end();
 if(action=='facebook')
 {
 	console.log("===Received a message from FB");
-
-
+	dashbot.logIncoming(req.body);
+	
     // get all the entries
     var entries = req.body.entry;
     var promises = [];
@@ -34,7 +35,8 @@ if(action=='facebook')
            //console.log("===message",message);
            var senderId = message.sender.id;
 
-
+		
+			
            // check if it is a text message
            var isTextMessage = Object.keys(message).indexOf("message") != -1;
            var isPostback = Object.keys(message).indexOf("postback") != -1;
@@ -42,6 +44,7 @@ if(action=='facebook')
 			   var msg_id=message.message.mid;
                var text = message.message.text;
                console.log("===text message",text);
+	//notifyincoming(message,senderId);
                // in case of text messages
                // we send the text to API.ai for NLP
                // however, we check for some special messages that don't need NLP
@@ -54,6 +57,7 @@ if(action=='facebook')
                    // NLP!
                    console.log("===user sent text");
                    promises.push( nlp(text,senderId,msg_id) );
+				  
                }
            }else if(isPostback){
                console.log("===user sent postback");
@@ -67,6 +71,7 @@ if(action=='facebook')
     Q.all(promises).then(function(results){
         results.forEach(function(result){
 			checkControlOfChat(result);
+			
            //afterNlp(result);
         });
     },function(error){
@@ -85,6 +90,63 @@ else{
 }
 //------------------------------------------------------------------------------
 
+function notifyincoming(message,senderId)
+{
+	 // Build the post string from an object
+	  console.log("===dashbot in");
+	   var options = {
+		uri: 'https://tracker.dashbot.io/track?platform=facebook&v=0.6.0&type=incoming&apiKey=v32QmG1446nC9QpYWV13hbgrd8F2HEQTc3sivlw2',
+        method: 'POST',
+        json : {
+            recipient: {
+                id : senderId
+            },
+            message : message
+        }
+		};
+
+		request(options, function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+			console.log("===dashbot response success") // Print the shortened url.
+			
+
+		  }
+		  else{
+			console.log("===dashbot response failure",body);
+			//console.log("===dashbot response error",error);
+			//console.log("===dashbot response response",response);
+		  }
+		});
+}
+
+function notifyout(message,senderId)
+{
+	 // Build the post string from an object
+	  console.log("===dashbot out");
+	   var options = {
+		uri: 'https://tracker.dashbot.io/track?platform=facebook&v=0.6.0&type=outgoing&apiKey=v32QmG1446nC9QpYWV13hbgrd8F2HEQTc3sivlw2',
+        method: 'POST',
+        json : {
+            recipient: {
+                id : senderId
+            },
+            message : message
+        }
+		};
+
+		request(options, function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+			console.log("===dashbot response success") // Print the shortened url.
+			
+
+		  }
+		  else{
+			console.log("===dashbot response failure",body);
+			//console.log("===dashbot response error",error);
+			//console.log("===dashbot response response",response);
+		  }
+		});
+}
 
 function afterNlp(data){
 
@@ -394,8 +456,38 @@ function handlePostback(payload,senderId){
 
 	}
 
+	else if(payload.toString().trim()==="talktoexpert")
+	{
+		var promises = [];
+	     var msg_id="1234";
+		 var text="exit to letsclap";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
 
-
+	/* else if(payload.toString().trim()==="prodlist")
+	{
+		var promises = [];
+	     var msg_id="1234";
+		 var text=payload.substr(8,end);
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
+ */
+	
+	
     else if( /excerpt \d+/i.test(payload) ){
         var id = payload.match(/excerpt (\d+)/)[1];
         console.log("===excerpt for",id);
@@ -778,10 +870,11 @@ function hello(data){
     return db.getMessagesOfType("hello").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-
-		var button1=fb.createButton("Services","devtool");
-		var button2=fb.createButton("Submit a tool","services");
-		var button3=fb.createButton("Find a Tool","tools");
+		var button1=fb.createButton("Find a Tool","tools");
+		var button2=fb.createButton("Service providers","services");
+		
+		var button3=fb.createButton("Submit your product","devtool");
+		//var button3=fb.createButton("Find a Tool","tools");
 		var message={
 			"attachment":{
 				"type":"template",
@@ -792,7 +885,10 @@ function hello(data){
 							}
 						}
 					};
+					
+		//fb.notifyout(message,senderId);
 		return fb.reply(message,senderId);
+		
 
         //return fb.reply( fb.textMessage(text), senderId);
     },function(error){
@@ -843,7 +939,80 @@ function listProductivityTools(data){
 	console.log("===context lifespan", context.lifespan);
     var page = MAX_PAGE_NO - context.lifespan;
 
-    return db.getMessagesOfType("productivity_tools").then(function(messages){
+	
+	return db.getMessagesOfType("productivity_tools").then(function(messages){
+        console.log("===page number",page);
+        var text = "Click on a category to find tools. Type 'more' for more categories";
+		
+		var item=findItemWithPageNumber(messages,page);
+		if(page==3)
+		{
+			text="That will be all. Click on a category to find tools.";
+		}
+		var list_tools=item.text.split("\n");
+		console.log("==split tools",list_tools);
+		var message={
+			"text":text,
+			"quick_replies":[
+			  {
+				"content_type":"text",
+				"title":list_tools[0].substr(list_tools[0].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[0].substr(0, list_tools[0].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[1].substr(list_tools[1].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[1].substr(0, list_tools[1].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[2].substr(list_tools[2].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[2].substr(0, list_tools[2].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[3].substr(list_tools[3].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[3].substr(0, list_tools[3].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[4].substr(list_tools[4].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[4].substr(0, list_tools[4].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[5].substr(list_tools[5].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[5].substr(0, list_tools[5].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[6].substr(list_tools[6].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[6].substr(0, list_tools[6].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[7].substr(list_tools[7].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[7].substr(0, list_tools[7].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[8].substr(list_tools[8].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[8].substr(0, list_tools[8].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[9].substr(list_tools[9].indexOf('.')+1),
+				"payload":"prodlist"+list_tools[9].substr(0, list_tools[9].indexOf('.'))
+			  }
+			]
+				};
+		return fb.reply(message,senderId);
+    },function(error){
+        console.log("[webhook_post.js]",error);
+    }); 
+	 
+	
+    /* return db.getMessagesOfType("productivity_tools").then(function(messages){
         console.log("===page number",page);
         var message = findItemWithPageNumber(messages,page);
         console.log("===chosen message", message);
@@ -851,7 +1020,7 @@ function listProductivityTools(data){
         return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
-    });
+    }); */
 }
 //------------------------------------------------------------------------------
 function listMarketingTools(data){
@@ -863,7 +1032,77 @@ function listMarketingTools(data){
     var context = contexts.pop();
     var page = MAX_PAGE_NO - context.lifespan;
 
-    return db.getMessagesOfType("marketing_tools").then(function(messages){
+	return db.getMessagesOfType("marketing_tools").then(function(messages){
+        console.log("===page number",page);
+        var text = "Click on a category to find tools. Type 'more' for more categories";
+		
+		var item=findItemWithPageNumber(messages,page);
+		if(page==5)
+		{
+			text="That will be all. Click on a category to find tools.";
+		}
+		var list_tools=item.text.split("\n");
+		console.log("==split tools",list_tools);
+		var message={
+			"text":text,
+			"quick_replies":[
+			  {
+				"content_type":"text",
+				"title":list_tools[0].substr(list_tools[0].indexOf('.')+1),
+				"payload":"marklist"+list_tools[0].substr(0, list_tools[0].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[1].substr(list_tools[1].indexOf('.')+1),
+				"payload":"marklist"+list_tools[1].substr(0, list_tools[1].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[2].substr(list_tools[2].indexOf('.')+1),
+				"payload":"marklist"+list_tools[2].substr(0, list_tools[2].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[3].substr(list_tools[3].indexOf('.')+1),
+				"payload":"marklist"+list_tools[3].substr(0, list_tools[3].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[4].substr(list_tools[4].indexOf('.')+1),
+				"payload":"marklist"+list_tools[4].substr(0, list_tools[4].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[5].substr(list_tools[5].indexOf('.')+1),
+				"payload":"marklist"+list_tools[5].substr(0, list_tools[5].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[6].substr(list_tools[6].indexOf('.')+1),
+				"payload":"marklist"+list_tools[6].substr(0, list_tools[6].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[7].substr(list_tools[7].indexOf('.')+1),
+				"payload":"marklist"+list_tools[7].substr(0, list_tools[7].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[8].substr(list_tools[8].indexOf('.')+1),
+				"payload":"marklist"+list_tools[8].substr(0, list_tools[8].indexOf('.'))
+			  },
+			  {
+				"content_type":"text",
+				"title":list_tools[9].substr(list_tools[9].indexOf('.')+1),
+				"payload":"marklist"+list_tools[9].substr(0, list_tools[9].indexOf('.'))
+			  }
+			]
+				};
+		return fb.reply(message,senderId);
+    },function(error){
+        console.log("[webhook_post.js]",error);
+    }); 
+    /* return db.getMessagesOfType("marketing_tools").then(function(messages){
         console.log("===page number",page);
         var message = findItemWithPageNumber(messages,page);
         console.log("===chosen message", message);
@@ -871,7 +1110,7 @@ function listMarketingTools(data){
         return fb.reply( fb.textMessage(text), senderId);
     },function(error){
         console.log("[webhook_post.js]",error);
-    });
+    }); */
 }
 //------------------------------------------------------------------------------
 function recommendProductivityTools(data){
@@ -1052,6 +1291,21 @@ function findItemWithPageNumber(array,page){
     }
     return item;
 }
+//------------------------------------------------------------------------------
+function getquickbuttons(array,page){
+    //var message;
+	var item;
+    for(var i = 0; i < array.length; i++){
+        if( array[i].page == page){
+            item = array[i].split("\n");
+			console.log("==item after slpit",item);
+            break;
+        }
+    }
+	
+    return item;
+}
+
 //------------------------------------------------------------------------------
 function randomIndex(array){
     return Math.floor(Math.random()*array.length);
