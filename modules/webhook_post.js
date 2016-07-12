@@ -370,7 +370,22 @@ function handlePostback(payload,senderId){
     console.log("===postback",payload);
     console.log("===senderId",senderId);
 
-	if(payload.toString().trim()==="devtool")
+	if(payload.toString().trim()==="hello")
+	{
+		var promises = [];
+	     var msg_id="1234";
+		 var text="hello";
+		 promises.push( nlp(text,senderId,msg_id) );
+		 Q.all(promises).then(function(results){
+			results.forEach(function(result){
+            afterNlp(result);
+        });
+		},function(error){
+			console.log("[webhook_post.js]",error);
+		});
+	}
+	
+	else if(payload.toString().trim()==="devtool")
 	{
 		var promises = [];
 	     var msg_id="1234";
