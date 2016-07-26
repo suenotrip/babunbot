@@ -18,10 +18,12 @@ module.exports = function(req,res,next){
 
 	
 	//var action=req.body.action || "facebook";
-	var paused=req.body.paused || "facebook";
-	console.log("==dashbot params",paused);
+	//var paused=req.body.paused || "facebook";
+	
+	//console.log("==dashbot params",paused);
 	 res.end();
-if(paused=='facebook')
+//if(paused=='facebook')
+if(!(req.body.hasOwnProperty("paused")))
 {
 	console.log("===Received a message from FB");
 	dashbot.logIncoming(req.body);
