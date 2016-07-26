@@ -87,7 +87,7 @@ else{
 	console.log("===Received a message from dashbot");
 	var senderId=req.body.userId;
 	console.log("===dashbot user_id=",senderId);
-	
+	var paused=req.body.paused;
 	if(paused)
 	{
 	console.log("===paused inside true===");
