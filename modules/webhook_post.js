@@ -17,10 +17,11 @@ module.exports = function(req,res,next){
     // causing you to accidentally spam the user.
 
 	
-	var action=req.body.action || "facebook";
-	console.log("==letsclap params",action);
+	//var action=req.body.action || "facebook";
+	var paused=req.body.paused || "facebook";
+	console.log("==dashbot params",paused);
 	 res.end();
-if(action=='facebook')
+if(paused=='facebook')
 {
 	console.log("===Received a message from FB");
 	dashbot.logIncoming(req.body);
@@ -81,11 +82,18 @@ if(action=='facebook')
 
 }
 else{
-	console.log("===Received a message from letsclap");
-	var senderId=req.body.user_id;
-	console.log("===letsclap user_id=",senderId);
+	console.log("===Received a message from dashbot");
+	var senderId=req.body.userId;
+	console.log("===dashbot user_id=",senderId);
+	if(paused=='true')
+	{
+		updateUserStatus(senderId,0);
+	}
+	else{
 	updateUserStatus(senderId,1);
-	return fb.reply(fb.textMessage("So you are back with Babun Bot. Say HELLO to get started."),senderId);
+	}
+	
+	//return fb.reply(fb.textMessage("So you are back with Babun Bot. Say HELLO to get started."),senderId);
 }	
 }
 //------------------------------------------------------------------------------
