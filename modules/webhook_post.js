@@ -302,16 +302,18 @@ else{
 
 	else{
 		var text="So you decided to continue with BabunBot. Here is what I can help you with.";
-		var button1=fb.createButton("Services","devtool");
-		var button2=fb.createButton("Submit a tool","services");
-		var button3=fb.createButton("Find a Tool","tools");
+		var button1=fb.createButton("Find a Tool","tools");
+		//var button2=fb.createButton("Service providers","services");
+		
+		var button3=fb.createButton("Submit your product","devtool");
+		//var button3=fb.createButton("Find a Tool","tools");
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2,button3]
+					"buttons":[button1,button3]
 							}
 						}
 					};
@@ -389,7 +391,7 @@ function handlePostback(payload,senderId){
 	{
 		var promises = [];
 	     var msg_id="1234";
-		 var text="add development tool";
+		 var text="submit tool";
 		 promises.push( nlp(text,senderId,msg_id) );
 		 Q.all(promises).then(function(results){
 			results.forEach(function(result){
@@ -404,7 +406,7 @@ function handlePostback(payload,senderId){
 	{
 		var promises = [];
 	     var msg_id="1234";
-		 var text="submit tool";
+		 var text="add development tool";
 		 promises.push( nlp(text,senderId,msg_id) );
 		 Q.all(promises).then(function(results){
 			results.forEach(function(result){
@@ -654,16 +656,16 @@ function developmentTool(data){
 			var message = oneOf(messages);
 			var text = message.text;
 
-		var button1=fb.createButton("Services","devtool");
-		var button2=fb.createButton("Submit a tool","services");
-		var button3=fb.createButton("Find a Tool","tools");
+		var button1=fb.createButton("Find a Tool","tools");
+		//var button2=fb.createButton("Service providers","services");
+		var button3=fb.createButton("Submit your product","devtool");
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2,button3]
+					"buttons":[button1,button3]
 							}
 						}
 					};
@@ -760,16 +762,16 @@ function submitTool(data){
 			var message = oneOf(messages);
 			var text = message.text;
 
-		var button1=fb.createButton("Services","devtool");
-		var button2=fb.createButton("Submit a tool","services");
-		var button3=fb.createButton("Find a Tool","tools");
+		var button1=fb.createButton("Find a Tool","tools");
+		//var button2=fb.createButton("Service providers","services");
+		var button3=fb.createButton("Submit your product","devtool");
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2,button3]
+					"buttons":[button1,button3]
 							}
 						}
 					};
@@ -792,15 +794,18 @@ function help(data){
         var message = oneOf(messages);
         var text = message.text;
 
-		var button1=fb.createButton("Services","services");
-		var button2=fb.createButton("Tools","tools");
+		var button1=fb.createButton("Find a Tool","tools");
+		//var button2=fb.createButton("Service providers","services");
+		
+		var button3=fb.createButton("Submit your product","devtool");
+		//var button3=fb.createButton("Find a Tool","tools");
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2]
+					"buttons":[button1,button3]
 							}
 						}
 					};
@@ -885,18 +890,20 @@ function hello(data){
     return db.getMessagesOfType("hello").then(function(messages){
         var message = oneOf(messages);
         var text = message.text;
-		var button1=fb.createButton("Find a Tool","tools");
-		var button2=fb.createButton("Service providers","services");
 		
+		var button1=fb.createButton("Find a Tool","tools");
+//-----service providers corresponds to development tool on babun site---------------------
+		//var button2=fb.createButton("Service providers","services");
+//-----submit your product corresponds to Submit a tool on babun site---------------------
 		var button3=fb.createButton("Submit your product","devtool");
-		//var button3=fb.createButton("Find a Tool","tools");
+		
 		var message={
 			"attachment":{
 				"type":"template",
 				"payload":{
 					"template_type":"button",
 					"text":text,
-					"buttons":[button1,button2,button3]
+					"buttons":[button1,button3]
 							}
 						}
 					};
