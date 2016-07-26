@@ -86,7 +86,7 @@ else{
 	var senderId=req.body.userId;
 	console.log("===dashbot user_id=",senderId);
 	
-	if(paused=="true")
+	if(paused)
 	{
 	console.log("===paused inside true===");
 		updateUserStatus(senderId,0);
