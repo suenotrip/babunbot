@@ -22,8 +22,34 @@ module.exports = function(req,res,next){
 	
 	//console.log("==dashbot params",paused);
 	 res.end();
-//if(paused=='facebook')
-if(!(req.body.hasOwnProperty("paused")))
+//if the call is from dashbot for pausing and unpausing the bot
+if(req.body.hasOwnProperty("paused"))
+{
+	console.log("===Received a message from dashbot");
+	var senderId=req.body.userId;
+	console.log("===dashbot user_id=",senderId);
+	var paused=req.body.paused;
+	if(paused)
+	{
+	console.log("===paused inside true===");
+		updateUserStatus(senderId,0);
+	}
+	else{
+	console.log("===paused inside false===");
+	updateUserStatus(senderId,1);
+	}
+	
+	//return fb.reply(fb.textMessage("So you are back with Babun Bot. Say HELLO to get started."),senderId);
+}
+else if	(req.body.hasOwnProperty("action"))
+{
+	console.log("===Received a message from letsclap");
+	var senderId=req.body.user_id;
+	console.log("===letsclap user_id=",senderId);
+	updateUserStatus(senderId,1);
+	return fb.reply(fb.textMessage("So you are back with Babun Bot. Say HELLO to get started."),senderId);
+}
+else
 {
 	console.log("===Received a message from FB");
 	dashbot.logIncoming(req.body);
@@ -83,23 +109,7 @@ if(!(req.body.hasOwnProperty("paused")))
     return next();
 
 }
-else{
-	console.log("===Received a message from dashbot");
-	var senderId=req.body.userId;
-	console.log("===dashbot user_id=",senderId);
-	var paused=req.body.paused;
-	if(paused)
-	{
-	console.log("===paused inside true===");
-		updateUserStatus(senderId,0);
-	}
-	else{
-	console.log("===paused inside false===");
-	updateUserStatus(senderId,1);
-	}
-	
-	//return fb.reply(fb.textMessage("So you are back with Babun Bot. Say HELLO to get started."),senderId);
-}	
+
 }
 //------------------------------------------------------------------------------
 
