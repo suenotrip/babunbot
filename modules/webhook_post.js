@@ -228,6 +228,9 @@ function afterNlp(data){
             case "agent.gender.get":
                 gender(data);
                 break;
+			case "agent.thanks":
+                thanks(data);
+                break;
             default:
                 dontKnow(data);
         }
